@@ -1,28 +1,53 @@
 import { faker } from '@faker-js/faker'
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 import dayjs, { type Dayjs } from 'dayjs'
 
-import { PrismaClient, type Tag, type User } from '~/generated/prisma/client'
-
-const adapter = new PrismaBetterSqlite3({
-  url: process.env.DATABASE_URL || 'file:./dev.db',
-})
-
-const prisma = new PrismaClient({ adapter })
+import { prisma } from '~/db'
+import { type Tag } from '~/generated/prisma/client'
+import { authClient } from '~/lib/auth/client'
 
 async function main() {
   console.log('🌱 Seeding database...')
 
+  // Ensure the local dev server is running before we try to seed.
+  try {
+    await ensureServerRunning('http://localhost:3001')
+  } catch (err) {
+    console.error(
+      '\n❌ Server at http://localhost:3001 is not reachable. Start the server and retry.\n',
+      err,
+    )
+    process.exit(1)
+  }
+
   // Clear existing data
   await clearTables()
 
-  const [user] = await createUsers()
+  const mainUserId = await createUsers()
 
-  const tags = await createTags(user)
+  const tags = await createTags(mainUserId)
 
-  await createEntries(user, tags)
+  await createEntries(mainUserId, tags)
 
   console.log(`✅ Created seed`)
+}
+
+async function ensureServerRunning(
+  url = 'http://localhost:3001',
+  timeoutMs = 3000,
+): Promise<void> {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), timeoutMs)
+
+  try {
+    const res = await fetch(url, { method: 'HEAD', signal: controller.signal })
+    clearTimeout(timeout)
+    if (res.status >= 500) {
+      throw new Error(`Server responded with status ${res.status}`)
+    }
+  } catch (err) {
+    clearTimeout(timeout)
+    throw err
+  }
 }
 
 function clearTables() {
@@ -37,55 +62,57 @@ function clearTables() {
  * Create 2 users - the first being the main test user, and an extraneous one to test ownership rules.
  */
 async function createUsers() {
-  // use the same salt and hash for both, for simplicity. password is "test"
-  const hash =
-    'd670d3b3d9fa8267d944010df5dcfa6e74905d0f676ede0f5bc7fa2ff88ee5a7e521cbf4cbd9c59454bbae6b27986df1e010476116e989eacf865d534f9b5212'
-  const salt = '705cd5113fcbe2ccd6c44ad242fc7ec7'
-  // TODO: sign users up using better auth instead of manually inserting them
-  return prisma.user.createManyAndReturn({
-    data: [
-      { id: '1', name: 'test', email: 'test@email.com' },
-      { id: '2', name: faker.person.firstName(), email: 'test2@email.com' },
-    ],
+  // TODO: maybe just go back to having it insert manually
+  const user1 = await authClient.signUp.email({
+    email: 'test@email.com',
+    password: 'testing123',
+    name: 'test',
   })
+  if (user1.error) throw user1.error
+  const user2 = await authClient.signUp.email({
+    email: 'test2@email.com',
+    password: 'testing123',
+    name: faker.person.firstName(),
+  })
+  if (user2.error) throw user2.error
+
+  return user1.data.user.id
 }
 
-async function createTags(user: User) {
+async function createTags(userId: string) {
   return prisma.tag.createManyAndReturn({
     data: Array.from({ length: 5 }, (_v, k) => k + 1).map((id) => ({
       id,
       text: faker.word.noun(),
-      userId: user.id,
+      userId,
     })),
   })
 }
 
-async function createEntries(user: User, allTags: Tag[]) {
+async function createEntries(userId: string, allTags: Tag[]) {
   // Start from yesterday, so any new entries are guaranteed to be the latest
   const startDate = dayjs().subtract(1, 'day').startOf('day')
   let id = 1
 
   // go back 1000 days
-   
+
   for (const i of [...Array(1000).keys()]) {
     // 20% chance we don't use this day (user skipped a day)
     if (Math.random() <= 0.2) {
-       
       continue
     }
 
     const currentDate = startDate.subtract(i, 'days')
     const { date, title, text, tags } = createEntryInput(currentDate, allTags)
     // Can't create many because it doesn't allow many-to-many foreign keys
-     
+
     await prisma.entry.create({
       data: {
-         
         id: id++,
         date,
         title,
         text,
-        authorId: user.id,
+        authorId: userId,
         tags: { connect: tags },
       },
     })
