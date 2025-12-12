@@ -2,13 +2,16 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import { type QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
+  createRootRouteWithContext,
   HeadContent,
   Scripts,
-  createRootRouteWithContext,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
-import Header from '../components/Header'
+import { Toaster } from '~/components/ui/sonner'
+import * as Theme from '~/integrations/theme/root-provider'
+import { getThemeServerFn } from '~/lib/theme'
+
 import appCss from '../styles.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
@@ -23,7 +26,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           content: 'width=device-width, initial-scale=1',
         },
         {
-          title: 'Chronicle',
+          title: 'Chronicle (New)',
         },
       ],
       links: [
@@ -33,20 +36,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         },
       ],
     }),
-
+    loader: () => getThemeServerFn(),
     shellComponent: RootDocument,
   },
 )
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const theme = Route.useLoaderData()
   return (
-    <html lang="en">
+    <html className={theme} lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
-        <Header />
-        {children}
+        <Theme.Provider theme={theme}>
+          {children}
+          <Toaster />
+        </Theme.Provider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

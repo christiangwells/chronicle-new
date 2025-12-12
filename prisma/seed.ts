@@ -3,21 +3,10 @@ import dayjs, { type Dayjs } from 'dayjs'
 
 import { prisma } from '~/db'
 import { type Tag } from '~/generated/prisma/client'
-import { authClient } from '~/lib/auth/client'
+import { auth } from '~/lib/auth'
 
 async function main() {
   console.log('🌱 Seeding database...')
-
-  // Ensure the local dev server is running before we try to seed.
-  try {
-    await ensureServerRunning('http://localhost:3001')
-  } catch (err) {
-    console.error(
-      '\n❌ Server at http://localhost:3001 is not reachable. Start the server and retry.\n',
-      err,
-    )
-    process.exit(1)
-  }
 
   // Clear existing data
   await clearTables()
@@ -29,25 +18,6 @@ async function main() {
   await createEntries(mainUserId, tags)
 
   console.log(`✅ Created seed`)
-}
-
-async function ensureServerRunning(
-  url = 'http://localhost:3001',
-  timeoutMs = 3000,
-): Promise<void> {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), timeoutMs)
-
-  try {
-    const res = await fetch(url, { method: 'HEAD', signal: controller.signal })
-    clearTimeout(timeout)
-    if (res.status >= 500) {
-      throw new Error(`Server responded with status ${res.status}`)
-    }
-  } catch (err) {
-    clearTimeout(timeout)
-    throw err
-  }
 }
 
 function clearTables() {
@@ -62,21 +32,22 @@ function clearTables() {
  * Create 2 users - the first being the main test user, and an extraneous one to test ownership rules.
  */
 async function createUsers() {
-  // TODO: maybe just go back to having it insert manually
-  const user1 = await authClient.signUp.email({
-    email: 'test@email.com',
-    password: 'testing123',
-    name: 'test',
+  const { user } = await auth.api.signUpEmail({
+    body: {
+      email: 'test@email.com',
+      password: 'testing123',
+      name: 'test',
+    },
   })
-  if (user1.error) throw user1.error
-  const user2 = await authClient.signUp.email({
-    email: 'test2@email.com',
-    password: 'testing123',
-    name: faker.person.firstName(),
+  await auth.api.signUpEmail({
+    body: {
+      email: 'test2@email.com',
+      password: 'testing123',
+      name: faker.person.firstName(),
+    },
   })
-  if (user2.error) throw user2.error
 
-  return user1.data.user.id
+  return user.id
 }
 
 async function createTags(userId: string) {

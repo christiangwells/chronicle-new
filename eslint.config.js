@@ -39,6 +39,10 @@ export default [
           },
         },
       ],
+      'sort-imports': [
+        'error',
+        { ignoreCase: true, ignoreDeclarationSort: true },
+      ],
     },
   },
 ]
