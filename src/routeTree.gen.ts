@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LogoutRouteImport } from './routes/logout'
+import { Route as HealthRouteImport } from './routes/health'
 import { Route as DemoRouteRouteImport } from './routes/demo/route'
 import { Route as UnauthedRouteRouteImport } from './routes/_unauthed/route'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
@@ -34,6 +35,11 @@ import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ss
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
   path: '/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HealthRoute = HealthRouteImport.update({
+  id: '/health',
+  path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoRouteRoute = DemoRouteRouteImport.update({
@@ -138,6 +144,7 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRouteRouteWithChildren
+  '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/_authed': typeof AuthedRouteRouteWithChildren
   '/_unauthed': typeof UnauthedRouteRouteWithChildren
   '/demo': typeof DemoRouteRouteWithChildren
+  '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
   '/_unauthed/login': typeof UnauthedLoginRoute
   '/_unauthed/register': typeof UnauthedRegisterRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/demo'
+    | '/health'
     | '/logout'
     | '/login'
     | '/register'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/health'
     | '/logout'
     | '/login'
     | '/register'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/_authed'
     | '/_unauthed'
     | '/demo'
+    | '/health'
     | '/logout'
     | '/_unauthed/login'
     | '/_unauthed/register'
@@ -272,6 +284,7 @@ export interface RootRouteChildren {
   AuthedRouteRoute: typeof AuthedRouteRouteWithChildren
   UnauthedRouteRoute: typeof UnauthedRouteRouteWithChildren
   DemoRouteRoute: typeof DemoRouteRouteWithChildren
+  HealthRoute: typeof HealthRoute
   LogoutRoute: typeof LogoutRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -283,6 +296,13 @@ declare module '@tanstack/react-router' {
       path: '/logout'
       fullPath: '/logout'
       preLoaderRoute: typeof LogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/health': {
+      id: '/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof HealthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo': {
@@ -493,6 +513,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthedRouteRoute: AuthedRouteRouteWithChildren,
   UnauthedRouteRoute: UnauthedRouteRouteWithChildren,
   DemoRouteRoute: DemoRouteRouteWithChildren,
+  HealthRoute: HealthRoute,
   LogoutRoute: LogoutRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

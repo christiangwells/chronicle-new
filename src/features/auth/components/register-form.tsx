@@ -13,6 +13,7 @@ import {
 } from '~/components/ui/field'
 import { Input } from '~/components/ui/input'
 import { authClient } from '~/lib/auth/client'
+import { logger } from '~/lib/logger'
 
 const formSchema = z
   .object({
@@ -22,11 +23,11 @@ const formSchema = z
       .string()
       .trim()
       .min(8, 'Passwords must be at least 8 characters'),
-    confirm: z.string().trim().min(1, 'Required'),
+    confirmPassword: z.string().trim().min(1, 'Required'),
   })
-  .refine((data) => data.password === data.confirm, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
-    path: ['confirm'],
+    path: ['confirmPassword'],
   })
 type Input = z.infer<typeof formSchema>
 
@@ -37,7 +38,7 @@ export const RegisterForm: React.FC = () => {
       email: '',
       name: '',
       password: '',
-      confirm: '',
+      confirmPassword: '',
     },
     validators: {
       onSubmit: formSchema,
@@ -47,7 +48,7 @@ export const RegisterForm: React.FC = () => {
     // },
     onSubmit: async ({ value }) => {
       try {
-        // console.log(value)
+        logger.debug(value, 'Submitted user registration')
         // return
         // TODO: type the useForm call, right now it wants all 12 options to be typed
         const { email, name, password } = value as Input
@@ -59,7 +60,7 @@ export const RegisterForm: React.FC = () => {
               toast.dismiss()
             },
             onError: (e) => {
-              console.error(e)
+              logger.error(e, 'Error registering user')
               toast.error('Could not register user', {
                 description: e.error.message,
                 duration: Infinity,
@@ -147,7 +148,7 @@ export const RegisterForm: React.FC = () => {
           }}
         />
         <form.Field
-          name="confirm"
+          name="confirmPassword"
           children={(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid
