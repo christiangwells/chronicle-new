@@ -10,6 +10,7 @@ export default [
   {
     rules: {
       '@typescript-eslint/array-type': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'off',
       'import/consistent-type-specifier-style': 'off',
       'import/order': [
         'error',
