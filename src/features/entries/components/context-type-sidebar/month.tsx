@@ -17,7 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '~/components/ui/sidebar'
-import { useGetEntriesByMonthSuspenseQuery } from '~/features/entries/data/get-by-month'
+import { useGetEntriesByMonthSuspenseQuery } from '~/features/entries/data/get-count-by-month'
 import { EntryContextType } from '~/features/entries/types'
 
 export const EntryMonths: React.FC = () => {

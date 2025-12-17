@@ -8,7 +8,7 @@ import {
 import type React from 'react'
 
 import { Button } from '~/components/ui/button'
-import { ButtonGroup } from '~/components/ui/button-group'
+import { ButtonGroup, ButtonGroupSeparator } from '~/components/ui/button-group'
 import {
   Sidebar,
   SidebarContent,
@@ -43,30 +43,35 @@ export const EntryContextTypeSidebar: React.FC<
     <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!">
       <SidebarHeader>
         <SidebarMenu className="flex flex-row justify-between">
-          <Button variant="outline" size="icon-sm">
+          {/* TODO: create a standalone create entry route */}
+          <Button variant="secondary" size="icon-sm">
             <PlusIcon />
           </Button>
           <ButtonGroup>
-            {contextTypeButtonData.map(({ contextType, icon }) => (
-              <Tooltip delayDuration={700} key={contextType}>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant={
-                      selectedContextType === contextType
-                        ? 'default'
-                        : 'outline'
-                    }
-                    size="icon-sm"
-                    onClick={() => selectContextType(contextType)}
-                  >
-                    {icon}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>View entries by {contextType}</TooltipContent>
-              </Tooltip>
+            {contextTypeButtonData.map(({ contextType, icon }, index, arr) => (
+              <>
+                <Tooltip delayDuration={700} key={contextType}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant={
+                        selectedContextType === contextType
+                          ? 'default'
+                          : 'secondary'
+                      }
+                      size="icon-sm"
+                      onClick={() => selectContextType(contextType)}
+                    >
+                      {icon}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>View entries by {contextType}</TooltipContent>
+                </Tooltip>
+                {index !== arr.length - 1 && <ButtonGroupSeparator />}
+              </>
             ))}
           </ButtonGroup>
-          <Button variant="outline" size="icon-sm">
+          {/* TODO: make a different sidebar group with keyword search, date filter, tag filter etc */}
+          <Button variant="secondary" size="icon-sm">
             <SearchIcon />
           </Button>
         </SidebarMenu>

@@ -1,3 +1,7 @@
+import type { Entry, Tag } from '~/generated/prisma/client'
+
+export type EntryWithTags = Entry & { tags: Tag[] }
+
 export enum EntryContextType {
   month = 'month',
   date = 'date',
