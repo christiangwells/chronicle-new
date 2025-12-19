@@ -15,3 +15,13 @@ export function assertEntryContextType(
     contextType as EntryContextType,
   )
 }
+
+export interface EntriesStats {
+  total: number
+  days: number
+  currentDayStreak: number
+  currentWeek: number
+  thisDay: number
+  firstDate: Date | null
+  latestDate: Date | null
+}

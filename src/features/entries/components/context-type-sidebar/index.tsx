@@ -6,6 +6,7 @@ import {
   TagIcon,
 } from 'lucide-react'
 import type React from 'react'
+import { Fragment } from 'react'
 
 import { Button } from '~/components/ui/button'
 import { ButtonGroup, ButtonGroupSeparator } from '~/components/ui/button-group'
@@ -49,8 +50,8 @@ export const EntryContextTypeSidebar: React.FC<
           </Button>
           <ButtonGroup>
             {contextTypeButtonData.map(({ contextType, icon }, index, arr) => (
-              <>
-                <Tooltip delayDuration={700} key={contextType}>
+              <Fragment key={contextType}>
+                <Tooltip delayDuration={700}>
                   <TooltipTrigger asChild>
                     <Button
                       variant={
@@ -67,7 +68,7 @@ export const EntryContextTypeSidebar: React.FC<
                   <TooltipContent>View entries by {contextType}</TooltipContent>
                 </Tooltip>
                 {index !== arr.length - 1 && <ButtonGroupSeparator />}
-              </>
+              </Fragment>
             ))}
           </ButtonGroup>
           {/* TODO: make a different sidebar group with keyword search, date filter, tag filter etc */}

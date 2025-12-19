@@ -35,7 +35,6 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 import { Route as AuthedEntriesContextTypeContextIdRouteImport } from './routes/_authed/entries/$contextType.$contextId'
-import { Route as AuthedEntriesContextTypeContextIdIndexRouteImport } from './routes/_authed/entries/$contextType.$contextId.index'
 import { Route as AuthedEntriesContextTypeContextIdEntryIdRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId'
 
 const LogoutRoute = LogoutRouteImport.update({
@@ -169,12 +168,6 @@ const AuthedEntriesContextTypeContextIdRoute =
     path: '/$contextId',
     getParentRoute: () => AuthedEntriesContextTypeRoute,
   } as any)
-const AuthedEntriesContextTypeContextIdIndexRoute =
-  AuthedEntriesContextTypeContextIdIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthedEntriesContextTypeContextIdRoute,
-  } as any)
 const AuthedEntriesContextTypeContextIdEntryIdRoute =
   AuthedEntriesContextTypeContextIdEntryIdRouteImport.update({
     id: '/$entryId',
@@ -208,7 +201,6 @@ export interface FileRoutesByFullPath {
   '/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
   '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdRoute
-  '/entries/$contextType/$contextId/': typeof AuthedEntriesContextTypeContextIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -226,13 +218,13 @@ export interface FileRoutesByTo {
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/entries': typeof AuthedEntriesIndexRoute
+  '/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdRouteWithChildren
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/entries/$contextType': typeof AuthedEntriesContextTypeIndexRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
   '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdRoute
-  '/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -263,7 +255,6 @@ export interface FileRoutesById {
   '/_authed/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
   '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
   '/_authed/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdRoute
-  '/_authed/entries/$contextType/$contextId/': typeof AuthedEntriesContextTypeContextIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -293,7 +284,6 @@ export interface FileRouteTypes {
     | '/entries/$contextType/'
     | '/demo/start/ssr'
     | '/entries/$contextType/$contextId/$entryId'
-    | '/entries/$contextType/$contextId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -311,13 +301,13 @@ export interface FileRouteTypes {
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
     | '/entries'
+    | '/entries/$contextType/$contextId'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
     | '/entries/$contextType'
     | '/demo/start/ssr'
     | '/entries/$contextType/$contextId/$entryId'
-    | '/entries/$contextType/$contextId'
   id:
     | '__root__'
     | '/'
@@ -347,7 +337,6 @@ export interface FileRouteTypes {
     | '/_authed/entries/$contextType/'
     | '/demo/start/ssr/'
     | '/_authed/entries/$contextType/$contextId/$entryId'
-    | '/_authed/entries/$contextType/$contextId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -544,13 +533,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesContextTypeContextIdRouteImport
       parentRoute: typeof AuthedEntriesContextTypeRoute
     }
-    '/_authed/entries/$contextType/$contextId/': {
-      id: '/_authed/entries/$contextType/$contextId/'
-      path: '/'
-      fullPath: '/entries/$contextType/$contextId/'
-      preLoaderRoute: typeof AuthedEntriesContextTypeContextIdIndexRouteImport
-      parentRoute: typeof AuthedEntriesContextTypeContextIdRoute
-    }
     '/_authed/entries/$contextType/$contextId/$entryId': {
       id: '/_authed/entries/$contextType/$contextId/$entryId'
       path: '/$entryId'
@@ -563,15 +545,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthedEntriesContextTypeContextIdRouteChildren {
   AuthedEntriesContextTypeContextIdEntryIdRoute: typeof AuthedEntriesContextTypeContextIdEntryIdRoute
-  AuthedEntriesContextTypeContextIdIndexRoute: typeof AuthedEntriesContextTypeContextIdIndexRoute
 }
 
 const AuthedEntriesContextTypeContextIdRouteChildren: AuthedEntriesContextTypeContextIdRouteChildren =
   {
     AuthedEntriesContextTypeContextIdEntryIdRoute:
       AuthedEntriesContextTypeContextIdEntryIdRoute,
-    AuthedEntriesContextTypeContextIdIndexRoute:
-      AuthedEntriesContextTypeContextIdIndexRoute,
   }
 
 const AuthedEntriesContextTypeContextIdRouteWithChildren =
@@ -683,10 +662,11 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

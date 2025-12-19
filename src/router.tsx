@@ -20,6 +20,8 @@ export const getRouter = () => {
         </TanstackQuery.Provider>
       )
     },
+    scrollRestoration: true,
+    scrollToTopSelectors: ['[data-radix-scroll-area-viewport]'],
   })
 
   setupRouterSsrQueryIntegration({ router, queryClient: rqContext.queryClient })

@@ -5,7 +5,6 @@ import {
   useMatchRoute,
 } from '@tanstack/react-router'
 
-import { FieldSeparator } from '~/components/ui/field'
 import {
   ResizableHandle,
   ResizablePanel,
@@ -54,7 +53,7 @@ function RouteComponent() {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="top-(--header-height) h-[calc(100svh-var(--header-height))]! bg-muted/50"
+      className="top-(--header-height) h-[calc(100svh-var(--header-height))]! bg-muted/80"
     >
       <ResizablePanel defaultSize={40} minSize={20} className="h-full">
         <ScrollArea className="h-full">
@@ -76,7 +75,7 @@ function RouteComponent() {
                 params={{
                   contextType,
                   contextId,
-                  entryId: entry.id.toString(),
+                  entryId: entry.uuid,
                 }}
                 className="group"
               >

@@ -14,6 +14,8 @@ import { getThemeServerFn } from '~/lib/theme'
 
 import appCss from '../styles.css?url'
 
+import { NotFoundRoute } from './-not-found'
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     head: () => ({
@@ -38,6 +40,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     }),
     loader: () => getThemeServerFn(),
     shellComponent: RootDocument,
+    notFoundComponent: NotFoundRoute,
   },
 )
 

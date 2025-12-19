@@ -35,7 +35,7 @@ export const EntrySummaryCard: React.FC<{ entry: EntryWithTags }> = ({
               {entry.tags
                 .sort((a, b) => a.text.localeCompare(b.text))
                 .map((tag) => (
-                  <Badge key={tag.id} className="uppercase">
+                  <Badge key={tag.id} variant="inverted" className="uppercase">
                     {tag.text}
                   </Badge>
                 ))}

@@ -30,9 +30,9 @@ export const EntryMonths: React.FC = () => {
   })
   const selection = match ? dayjs(match.contextId) : null
   const selectedYear = selection?.year().toString()
-  const selectedMonth = selection
-    ? (selection.month() + 1).toString()
-    : undefined
+  // const selectedMonth = selection
+  //   ? (selection.month() + 1).toString()
+  //   : undefined
 
   if (Object.keys(data).length === 0) {
     return (
@@ -49,18 +49,15 @@ export const EntryMonths: React.FC = () => {
             <Collapsible
               key={year}
               asChild
+              data-status={year === selectedYear ? 'active' : 'inactive'}
               defaultOpen={year === selectedYear}
               className="group/collapsible"
             >
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  variant="outline"
-                  className={
-                    year === selectedYear
-                      ? 'bg-primary hover:bg-primary/90! text-primary-foreground!'
-                      : ''
-                  }
+                  variant="default"
+                  className=" border group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/5 dark:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/2 group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:border-primary hover:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/5! dark:hover:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/2! group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:text-primary"
                 >
                   <CollapsibleTrigger>
                     {year}{' '}
@@ -80,20 +77,14 @@ export const EntryMonths: React.FC = () => {
                                 contextType: EntryContextType.month,
                                 contextId: `${year}-${month}`,
                               }}
-                              className="flex justify-between"
-                              activeProps={{
-                                className:
-                                  'bg-primary hover:bg-primary/90! text-primary-foreground!',
-                              }}
+                              className="group/month flex justify-between border border-transparent data-[status=active]:bg-primary/5 hover:data-[status=active]:bg-primary/5 data-[status=active]:border-primary data-[status=active]:text-primary"
                             >
                               {dayjs(`${year}-${month}-15`).format('MMMM')}
                               <Badge
-                                variant={
-                                  year === selectedYear &&
-                                  month === selectedMonth
-                                    ? 'default'
-                                    : 'outline'
-                                }
+                                // Manually set the CSS classes instead of changing the variant as
+                                // that lags behind the rest of the button changing
+                                variant="outline"
+                                className="group-data-[status=active]/month:border-transparent group-data-[status=active]/month:bg-primary/20 group-data-[status=active]/month:text-primary group-data-[status=active]/month:font-semibold"
                               >
                                 {count}
                               </Badge>
