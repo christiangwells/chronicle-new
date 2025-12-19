@@ -28,6 +28,7 @@ import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AuthedEntriesSearchRouteImport } from './routes/_authed/entries/search'
 import { Route as AuthedEntriesContextTypeRouteImport } from './routes/_authed/entries/$contextType'
 import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
 import { Route as AuthedEntriesContextTypeIndexRouteImport } from './routes/_authed/entries/$contextType.index'
@@ -130,6 +131,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthedEntriesSearchRoute = AuthedEntriesSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => AuthedEntriesRouteRoute,
+} as any)
 const AuthedEntriesContextTypeRoute =
   AuthedEntriesContextTypeRouteImport.update({
     id: '/$contextType',
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/': typeof DemoIndexRoute
   '/entries/$contextType': typeof AuthedEntriesContextTypeRouteWithChildren
+  '/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -211,6 +218,7 @@ export interface FileRoutesByTo {
   '/demo/prisma': typeof DemoPrismaRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo': typeof DemoIndexRoute
+  '/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -241,6 +249,7 @@ export interface FileRoutesById {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/demo/': typeof DemoIndexRoute
   '/_authed/entries/$contextType': typeof AuthedEntriesContextTypeRouteWithChildren
+  '/_authed/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -270,6 +279,7 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/'
     | '/entries/$contextType'
+    | '/entries/search'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/form/address'
@@ -294,6 +304,7 @@ export interface FileRouteTypes {
     | '/demo/prisma'
     | '/demo/tanstack-query'
     | '/demo'
+    | '/entries/search'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/form/address'
@@ -323,6 +334,7 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/demo/'
     | '/_authed/entries/$contextType'
+    | '/_authed/entries/search'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/form/address'
@@ -484,6 +496,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authed/entries/search': {
+      id: '/_authed/entries/search'
+      path: '/search'
+      fullPath: '/entries/search'
+      preLoaderRoute: typeof AuthedEntriesSearchRouteImport
+      parentRoute: typeof AuthedEntriesRouteRoute
+    }
     '/_authed/entries/$contextType': {
       id: '/_authed/entries/$contextType'
       path: '/$contextType'
@@ -577,11 +596,13 @@ const AuthedEntriesContextTypeRouteWithChildren =
 
 interface AuthedEntriesRouteRouteChildren {
   AuthedEntriesContextTypeRoute: typeof AuthedEntriesContextTypeRouteWithChildren
+  AuthedEntriesSearchRoute: typeof AuthedEntriesSearchRoute
   AuthedEntriesIndexRoute: typeof AuthedEntriesIndexRoute
 }
 
 const AuthedEntriesRouteRouteChildren: AuthedEntriesRouteRouteChildren = {
   AuthedEntriesContextTypeRoute: AuthedEntriesContextTypeRouteWithChildren,
+  AuthedEntriesSearchRoute: AuthedEntriesSearchRoute,
   AuthedEntriesIndexRoute: AuthedEntriesIndexRoute,
 }
 

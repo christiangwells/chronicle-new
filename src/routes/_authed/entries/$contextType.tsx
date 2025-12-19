@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  Outlet,
-  redirect,
-  useRouter,
-} from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 import { EntryContextTypeSidebar } from '~/features/entries/components/context-type-sidebar'
 import {
@@ -25,19 +20,10 @@ export const Route = createFileRoute('/_authed/entries/$contextType')({
 
 function RouteComponent() {
   const { contextType } = Route.useParams()
-  const router = useRouter()
 
   return (
     <div className="flex w-full">
-      <EntryContextTypeSidebar
-        selectedContextType={contextType}
-        selectContextType={(selection: EntryContextType) =>
-          router.navigate({
-            to: '/entries/$contextType',
-            params: { contextType: selection },
-          })
-        }
-      />
+      <EntryContextTypeSidebar selectedContextType={contextType} />
       <Outlet />
     </div>
   )

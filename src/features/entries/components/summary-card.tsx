@@ -16,7 +16,9 @@ export const EntrySummaryCard: React.FC<{ entry: EntryWithTags }> = ({
     <Card className="py-0 hover:bg-background group-[.active]:bg-background group-[.active]:border-primary group-[.active]:shadow-none">
       <CardContent className="flex flex-row gap-4 items-center h-28 px-4 py-2 hover:bg-muted/40 hover:group-[.active]:bg-primary/5 group-[.active]:bg-primary/5 dark:group-[.active]:bg-primary/10">
         <div className="flex flex-col items-stretch justify-start text-muted-foreground uppercase text-center text-sm/5 font-bold">
-          {/* TODO: show time instead for date contextType */}
+          {/* TODO: maybe just show weekday, day, and time for month context and just time for date context.
+          potentially even for tags they should be grouped into months so only show same as month context
+          */}
           <p>{date.format('ddd')}</p>
           <h2 className="text-3xl tracking-tight">{date.format('DD')}</h2>
           <p>{date.format('MMM')}</p>

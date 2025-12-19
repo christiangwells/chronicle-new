@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import {
   Calendar1Icon,
   CalendarDaysIcon,
@@ -33,13 +34,12 @@ const contextTypeButtonData = [
 ]
 
 interface EntryContextTypeSidebarProps {
-  selectedContextType: EntryContextType
-  selectContextType: (selection: EntryContextType) => void
+  selectedContextType: EntryContextType | 'search'
 }
 
 export const EntryContextTypeSidebar: React.FC<
   EntryContextTypeSidebarProps
-> = ({ selectedContextType, selectContextType }) => {
+> = ({ selectedContextType }) => {
   return (
     <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!">
       <SidebarHeader>
@@ -60,9 +60,11 @@ export const EntryContextTypeSidebar: React.FC<
                           : 'secondary'
                       }
                       size="icon-sm"
-                      onClick={() => selectContextType(contextType)}
+                      asChild
                     >
-                      {icon}
+                      <Link to="/entries/$contextType" params={{ contextType }}>
+                        {icon}
+                      </Link>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>View entries by {contextType}</TooltipContent>
@@ -72,8 +74,13 @@ export const EntryContextTypeSidebar: React.FC<
             ))}
           </ButtonGroup>
           {/* TODO: make a different sidebar group with keyword search, date filter, tag filter etc */}
-          <Button variant="secondary" size="icon-sm">
-            <SearchIcon />
+          <Button
+            variant={selectedContextType === 'search' ? 'default' : 'secondary'}
+            size="icon-sm"
+          >
+            <Link to="/entries/search">
+              <SearchIcon />
+            </Link>
           </Button>
         </SidebarMenu>
       </SidebarHeader>
@@ -84,7 +91,7 @@ export const EntryContextTypeSidebar: React.FC<
   )
 }
 
-const Content: React.FC<{ contextType: EntryContextType }> = ({
+const Content: React.FC<{ contextType: EntryContextType | 'search' }> = ({
   contextType,
 }) => {
   if (contextType === EntryContextType.month) {
@@ -93,6 +100,8 @@ const Content: React.FC<{ contextType: EntryContextType }> = ({
     return 'date'
   } else if (contextType === EntryContextType.tag) {
     return 'tag'
+  } else if (contextType === 'search') {
+    return 'search'
   } else {
     assertUnreachable(contextType)
   }
