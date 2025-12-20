@@ -14,7 +14,7 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
   const closeRoute = useCloseRoute()
 
   return (
-    <div className="flex flex-col gap-2 h-full">
+    <div className="flex h-full flex-col gap-2">
       <div className="flex flex-row items-center">
         {closeRoute ? (
           <Button variant="secondary" size="icon-sm" asChild>
@@ -26,7 +26,7 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
           <div className="size-8" />
         )}
 
-        <p className="flex-1 text-center font-bold text-muted-foreground">
+        <p className="text-muted-foreground flex-1 text-center font-bold">
           {dayjs(entry.date).format('ddd, MMM D, YYYY, h:mm A')}
         </p>
         <Button variant="default" size="icon-sm">
@@ -34,10 +34,10 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
         </Button>
       </div>
       <h5 className="font-bold">{entry.title}</h5>
-      <ScrollArea className="flex-1 min-h-0">
+      <ScrollArea className="min-h-0 flex-1">
         <div
           dangerouslySetInnerHTML={{ __html: entry.text }}
-          className="space-y-2 text-card-foreground/70"
+          className="text-card-foreground/70 space-y-2"
         />
       </ScrollArea>
       <div className="space-x-2">

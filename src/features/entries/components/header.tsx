@@ -23,7 +23,7 @@ export const EntryHeader: React.FC = () => {
           <SidebarIcon />
         </Button>
         <Separator orientation="vertical" className="mr-2 h-4" />
-        <div className="flex-1 flex gap-4">
+        <div className="flex flex-1 gap-4">
           <Quill className="size-6 sm:size-8" />
           <div className="font-semibold sm:text-2xl">Chronicle</div>
         </div>

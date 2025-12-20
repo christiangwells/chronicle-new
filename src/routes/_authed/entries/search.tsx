@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <div className="flex w-full">
       <EntryContextTypeSidebar selectedContextType="search" />
-      <div className="flex-1 top-(--header-height) h-[calc(100svh-var(--header-height))]! bg-muted/80">
+      <div className="bg-muted/80 top-(--header-height) h-[calc(100svh-var(--header-height))]! flex-1">
         Search results go here
       </div>
     </div>

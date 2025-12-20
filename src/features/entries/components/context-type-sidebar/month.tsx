@@ -36,7 +36,7 @@ export const EntryMonths: React.FC = () => {
 
   if (Object.keys(data).length === 0) {
     return (
-      <p className="text-center mt-4 text-muted-foreground">No entries yet</p>
+      <p className="text-muted-foreground mt-4 text-center">No entries yet</p>
     )
   }
 
@@ -57,7 +57,7 @@ export const EntryMonths: React.FC = () => {
                 <SidebarMenuButton
                   asChild
                   variant="default"
-                  className=" border group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/5 dark:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/2 group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:border-primary hover:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/5! dark:hover:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/2! group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:text-primary"
+                  className="group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/5 dark:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/2 group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:border-primary hover:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/5! dark:hover:group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:bg-primary/2! group-data-[state=closed]/collapsible:group-data-[status=active]/collapsible:text-primary border"
                 >
                   <CollapsibleTrigger>
                     {year}{' '}
@@ -77,14 +77,14 @@ export const EntryMonths: React.FC = () => {
                                 contextType: EntryContextType.month,
                                 contextId: `${year}-${month}`,
                               }}
-                              className="group/month flex justify-between border border-transparent data-[status=active]:bg-primary/5 hover:data-[status=active]:bg-primary/5 data-[status=active]:border-primary data-[status=active]:text-primary"
+                              className="group/month data-[status=active]:bg-primary/5 hover:data-[status=active]:bg-primary/5 data-[status=active]:border-primary data-[status=active]:text-primary flex justify-between border border-transparent"
                             >
                               {dayjs(`${year}-${month}-15`).format('MMMM')}
                               <Badge
                                 // Manually set the CSS classes instead of changing the variant as
                                 // that lags behind the rest of the button changing
                                 variant="outline"
-                                className="group-data-[status=active]/month:border-transparent group-data-[status=active]/month:bg-primary/20 group-data-[status=active]/month:text-primary group-data-[status=active]/month:font-semibold"
+                                className="group-data-[status=active]/month:bg-primary/20 group-data-[status=active]/month:text-primary group-data-[status=active]/month:border-transparent group-data-[status=active]/month:font-semibold"
                               >
                                 {count}
                               </Badge>

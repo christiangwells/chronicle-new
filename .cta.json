@@ -12,12 +12,5 @@
   "git": true,
   "version": 1,
   "framework": "react-cra",
-  "chosenAddOns": [
-    "eslint",
-    "nitro",
-    "start",
-    "prisma",
-    "form",
-    "shadcn"
-  ]
+  "chosenAddOns": ["eslint", "nitro", "start", "prisma", "form", "shadcn"]
 }

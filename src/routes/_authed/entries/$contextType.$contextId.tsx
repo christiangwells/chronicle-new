@@ -53,14 +53,14 @@ function RouteComponent() {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="top-(--header-height) h-[calc(100svh-var(--header-height))]! bg-muted/80"
+      className="bg-muted/80 top-(--header-height) h-[calc(100svh-var(--header-height))]!"
     >
       <ResizablePanel defaultSize={40} minSize={20} className="h-full">
         <ScrollArea className="h-full">
-          <div className="p-4 flex flex-col gap-4 h-full">
+          <div className="flex h-full flex-col gap-4 p-4">
             <div className="relative my-2 flex items-center justify-center overflow-hidden">
               <Separator />
-              <span className="shrink-0 px-2 text-muted-foreground font-bold">
+              <span className="text-muted-foreground shrink-0 px-2 font-bold">
                 <EntryContextTitle
                   contextType={contextType}
                   contextId={contextId}

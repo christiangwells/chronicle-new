@@ -27,7 +27,7 @@ function RouteComponent() {
   return (
     <div className="top-(--header-height) h-[calc(100svh-var(--header-height))]! p-4">
       <Card className="h-full">
-        <CardContent className="flex flex-col h-full">
+        <CardContent className="flex h-full flex-col">
           <ReadOnlyEntry entry={entry} />
         </CardContent>
       </Card>

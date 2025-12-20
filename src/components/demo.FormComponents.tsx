@@ -1,6 +1,5 @@
 import { useStore } from '@tanstack/react-form'
 
-
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
@@ -33,7 +32,7 @@ function ErrorMessages({
       {errors.map((error) => (
         <div
           key={typeof error === 'string' ? error : error.message}
-          className="text-red-500 mt-1 font-bold"
+          className="mt-1 font-bold text-red-500"
         >
           {typeof error === 'string' ? error : error.message}
         </div>

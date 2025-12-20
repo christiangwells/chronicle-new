@@ -4545,6 +4545,7 @@ __metadata:
     dayjs: "npm:^1.11.19"
     dotenv-cli: "npm:^10.0.0"
     eslint: "npm:^9.39.1"
+    eslint-plugin-import-x: "npm:^4.16.1"
     jsdom: "npm:^27.0.0"
     ky: "npm:^1.14.1"
     lucide-react: "npm:^0.561.0"
