@@ -16,7 +16,8 @@
     "db:push": "dotenv -e .env.local -- prisma db push",
     "db:migrate": "dotenv -e .env.local -- prisma migrate dev",
     "db:studio": "dotenv -e .env.local -- prisma studio",
-    "db:seed": "dotenv -e .env.local -- prisma db seed"
+    "db:seed": "dotenv -e .env.local -- prisma db seed",
+    "postinstall": "husky"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.1.0",
@@ -75,7 +76,9 @@
     "dotenv-cli": "^10.0.0",
     "eslint": "^9.39.1",
     "eslint-plugin-import-x": "^4.16.1",
+    "husky": "^9.1.7",
     "jsdom": "^27.0.0",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tsx": "^4.20.6",
