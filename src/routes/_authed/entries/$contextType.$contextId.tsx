@@ -78,6 +78,7 @@ function RouteComponent() {
                   entryId: entry.uuid,
                 }}
                 className="group"
+                resetScroll={false}
               >
                 <EntrySummaryCard entry={entry} />
               </Link>

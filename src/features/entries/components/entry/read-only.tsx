@@ -12,6 +12,7 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
   entry,
 }) => {
   const closeRoute = useCloseRoute()
+  const editRoute = useEditRoute()
 
   return (
     <div className="flex h-full flex-col gap-2">
@@ -29,9 +30,15 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
         <p className="text-muted-foreground flex-1 text-center font-bold">
           {dayjs(entry.date).format('ddd, MMM D, YYYY, h:mm A')}
         </p>
-        <Button variant="default" size="icon-sm">
-          <PencilIcon />
-        </Button>
+        {editRoute ? (
+          <Button variant="default" size="icon-sm" asChild>
+            <Link to={editRoute.to} params={editRoute.params}>
+              <PencilIcon />
+            </Link>
+          </Button>
+        ) : (
+          <div className="size-8" />
+        )}
       </div>
       <h5 className="font-bold">{entry.title}</h5>
       <ScrollArea className="min-h-0 flex-1">
@@ -64,6 +71,24 @@ function useCloseRoute() {
   if (contextMatch) {
     return {
       to: '/entries/$contextType/$contextId',
+      params: contextMatch,
+    } as const
+  }
+
+  return null
+}
+
+function useEditRoute() {
+  const matchRoute = useMatchRoute()
+  const contextMatch = matchRoute({
+    to: '/entries/$contextType/$contextId/$entryId',
+    fuzzy: true,
+  })
+  // TODO: standalone match when that's a route?
+
+  if (contextMatch) {
+    return {
+      to: '/entries/$contextType/$contextId/$entryId/edit',
       params: contextMatch,
     } as const
   }

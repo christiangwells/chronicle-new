@@ -36,7 +36,8 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 import { Route as AuthedEntriesContextTypeContextIdRouteImport } from './routes/_authed/entries/$contextType.$contextId'
-import { Route as AuthedEntriesContextTypeContextIdEntryIdRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId'
+import { Route as AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId.index'
+import { Route as AuthedEntriesContextTypeContextIdEntryIdEditRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId.edit'
 
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
@@ -174,10 +175,16 @@ const AuthedEntriesContextTypeContextIdRoute =
     path: '/$contextId',
     getParentRoute: () => AuthedEntriesContextTypeRoute,
   } as any)
-const AuthedEntriesContextTypeContextIdEntryIdRoute =
-  AuthedEntriesContextTypeContextIdEntryIdRouteImport.update({
-    id: '/$entryId',
-    path: '/$entryId',
+const AuthedEntriesContextTypeContextIdEntryIdIndexRoute =
+  AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport.update({
+    id: '/$entryId/',
+    path: '/$entryId/',
+    getParentRoute: () => AuthedEntriesContextTypeContextIdRoute,
+  } as any)
+const AuthedEntriesContextTypeContextIdEntryIdEditRoute =
+  AuthedEntriesContextTypeContextIdEntryIdEditRouteImport.update({
+    id: '/$entryId/edit',
+    path: '/$entryId/edit',
     getParentRoute: () => AuthedEntriesContextTypeContextIdRoute,
   } as any)
 
@@ -207,7 +214,8 @@ export interface FileRoutesByFullPath {
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
-  '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdRoute
+  '/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
+  '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -232,7 +240,8 @@ export interface FileRoutesByTo {
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/entries/$contextType': typeof AuthedEntriesContextTypeIndexRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
-  '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdRoute
+  '/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
+  '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -263,7 +272,8 @@ export interface FileRoutesById {
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/_authed/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
   '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
-  '/_authed/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdRoute
+  '/_authed/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
+  '/_authed/entries/$contextType/$contextId/$entryId/': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -293,6 +303,7 @@ export interface FileRouteTypes {
     | '/demo/start/ssr/spa-mode'
     | '/entries/$contextType/'
     | '/demo/start/ssr'
+    | '/entries/$contextType/$contextId/$entryId/edit'
     | '/entries/$contextType/$contextId/$entryId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -318,6 +329,7 @@ export interface FileRouteTypes {
     | '/demo/start/ssr/spa-mode'
     | '/entries/$contextType'
     | '/demo/start/ssr'
+    | '/entries/$contextType/$contextId/$entryId/edit'
     | '/entries/$contextType/$contextId/$entryId'
   id:
     | '__root__'
@@ -348,7 +360,8 @@ export interface FileRouteTypes {
     | '/demo/start/ssr/spa-mode'
     | '/_authed/entries/$contextType/'
     | '/demo/start/ssr/'
-    | '/_authed/entries/$contextType/$contextId/$entryId'
+    | '/_authed/entries/$contextType/$contextId/$entryId/edit'
+    | '/_authed/entries/$contextType/$contextId/$entryId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -552,24 +565,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesContextTypeContextIdRouteImport
       parentRoute: typeof AuthedEntriesContextTypeRoute
     }
-    '/_authed/entries/$contextType/$contextId/$entryId': {
-      id: '/_authed/entries/$contextType/$contextId/$entryId'
+    '/_authed/entries/$contextType/$contextId/$entryId/': {
+      id: '/_authed/entries/$contextType/$contextId/$entryId/'
       path: '/$entryId'
       fullPath: '/entries/$contextType/$contextId/$entryId'
-      preLoaderRoute: typeof AuthedEntriesContextTypeContextIdEntryIdRouteImport
+      preLoaderRoute: typeof AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport
+      parentRoute: typeof AuthedEntriesContextTypeContextIdRoute
+    }
+    '/_authed/entries/$contextType/$contextId/$entryId/edit': {
+      id: '/_authed/entries/$contextType/$contextId/$entryId/edit'
+      path: '/$entryId/edit'
+      fullPath: '/entries/$contextType/$contextId/$entryId/edit'
+      preLoaderRoute: typeof AuthedEntriesContextTypeContextIdEntryIdEditRouteImport
       parentRoute: typeof AuthedEntriesContextTypeContextIdRoute
     }
   }
 }
 
 interface AuthedEntriesContextTypeContextIdRouteChildren {
-  AuthedEntriesContextTypeContextIdEntryIdRoute: typeof AuthedEntriesContextTypeContextIdEntryIdRoute
+  AuthedEntriesContextTypeContextIdEntryIdEditRoute: typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
+  AuthedEntriesContextTypeContextIdEntryIdIndexRoute: typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
 
 const AuthedEntriesContextTypeContextIdRouteChildren: AuthedEntriesContextTypeContextIdRouteChildren =
   {
-    AuthedEntriesContextTypeContextIdEntryIdRoute:
-      AuthedEntriesContextTypeContextIdEntryIdRoute,
+    AuthedEntriesContextTypeContextIdEntryIdEditRoute:
+      AuthedEntriesContextTypeContextIdEntryIdEditRoute,
+    AuthedEntriesContextTypeContextIdEntryIdIndexRoute:
+      AuthedEntriesContextTypeContextIdEntryIdIndexRoute,
   }
 
 const AuthedEntriesContextTypeContextIdRouteWithChildren =

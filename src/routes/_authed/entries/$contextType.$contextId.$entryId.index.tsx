@@ -13,7 +13,7 @@ import { ReadOnlyEntry } from '~/features/entries/components/entry/read-only'
 import { getEntryByUuid } from '~/features/entries/data/get-by-uuid'
 
 export const Route = createFileRoute(
-  '/_authed/entries/$contextType/$contextId/$entryId',
+  '/_authed/entries/$contextType/$contextId/$entryId/',
 )({
   loader: ({ params: { contextType, contextId, entryId } }) =>
     getEntryByUuid({ data: { contextType, contextId, uuid: entryId } }),
