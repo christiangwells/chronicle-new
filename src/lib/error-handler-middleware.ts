@@ -6,12 +6,15 @@ import { logger } from '~/lib/logger'
 
 export const errorHandlerMiddleware = createMiddleware({
   type: 'function',
-}).server(async ({ next, functionId }) => {
+}).server(async ({ next, serverFnMeta }) => {
   try {
     const result = await next()
     return result
   } catch (error) {
-    logger.error(error, `Error occurred processing function ${functionId}`)
+    logger.error(
+      error,
+      `Error occurred processing function ${serverFnMeta.name}`,
+    )
 
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&

@@ -213,9 +213,9 @@ export interface FileRoutesByFullPath {
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
-  '/demo/start/ssr': typeof DemoStartSsrIndexRoute
+  '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
   '/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
-  '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
+  '/entries/$contextType/$contextId/$entryId/': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -302,9 +302,9 @@ export interface FileRouteTypes {
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
     | '/entries/$contextType/'
-    | '/demo/start/ssr'
+    | '/demo/start/ssr/'
     | '/entries/$contextType/$contextId/$entryId/edit'
-    | '/entries/$contextType/$contextId/$entryId'
+    | '/entries/$contextType/$contextId/$entryId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -400,14 +400,14 @@ declare module '@tanstack/react-router' {
     '/_unauthed': {
       id: '/_unauthed'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof UnauthedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed': {
       id: '/_authed'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -526,7 +526,7 @@ declare module '@tanstack/react-router' {
     '/demo/start/ssr/': {
       id: '/demo/start/ssr/'
       path: '/start/ssr'
-      fullPath: '/demo/start/ssr'
+      fullPath: '/demo/start/ssr/'
       preLoaderRoute: typeof DemoStartSsrIndexRouteImport
       parentRoute: typeof DemoRouteRoute
     }
@@ -568,7 +568,7 @@ declare module '@tanstack/react-router' {
     '/_authed/entries/$contextType/$contextId/$entryId/': {
       id: '/_authed/entries/$contextType/$contextId/$entryId/'
       path: '/$entryId'
-      fullPath: '/entries/$contextType/$contextId/$entryId'
+      fullPath: '/entries/$contextType/$contextId/$entryId/'
       preLoaderRoute: typeof AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport
       parentRoute: typeof AuthedEntriesContextTypeContextIdRoute
     }

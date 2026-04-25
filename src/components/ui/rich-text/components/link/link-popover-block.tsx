@@ -58,7 +58,7 @@ export const LinkPopoverBlock: React.FC<LinkPopoverBlockProps> = ({
           tooltip={copyTitle}
           onClick={handleCopy}
           tooltipOptions={{
-            onPointerDownOutside: (e) => {
+            onPointerDownOutside: (e: any) => {
               if (e.target === e.currentTarget) e.preventDefault()
             },
           }}
