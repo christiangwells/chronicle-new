@@ -34,7 +34,7 @@ const contextTypeButtonData = [
 ]
 
 interface EntryContextTypeSidebarProps {
-  selectedContextType: EntryContextType | 'search'
+  selectedContextType?: EntryContextType | 'search'
 }
 
 export const EntryContextTypeSidebar: React.FC<
@@ -91,7 +91,7 @@ export const EntryContextTypeSidebar: React.FC<
   )
 }
 
-const Content: React.FC<{ contextType: EntryContextType | 'search' }> = ({
+const Content: React.FC<{ contextType?: EntryContextType | 'search' }> = ({
   contextType,
 }) => {
   if (contextType === EntryContextType.month) {
@@ -102,6 +102,8 @@ const Content: React.FC<{ contextType: EntryContextType | 'search' }> = ({
     return 'tag'
   } else if (contextType === 'search') {
     return 'search'
+  } else if (contextType === undefined) {
+    return null
   } else {
     assertUnreachable(contextType)
   }

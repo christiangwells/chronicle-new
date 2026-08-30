@@ -57,7 +57,7 @@ function RouteComponent() {
     >
       <ResizablePanel defaultSize={40} minSize={20} className="h-full">
         <ScrollArea className="h-full">
-          <div className="flex h-full flex-col gap-4 p-4">
+          <div className="mx-auto flex h-full w-full max-w-5xl flex-col gap-4 p-4">
             <div className="relative my-2 flex items-center justify-center overflow-hidden">
               <Separator />
               <span className="text-muted-foreground shrink-0 px-2 font-bold">

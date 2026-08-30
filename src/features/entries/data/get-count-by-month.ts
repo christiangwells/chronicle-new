@@ -21,15 +21,14 @@ export const getEntriesCountByMonth = createServerFn()
       ORDER BY year DESC, month DESC
     `
 
-    const result: Record<string, Record<number, number>> = {}
+    const result: Record<string, Record<string, number>> = {}
 
     for (const r of rows) {
       const year = r.year
-      const monthNum = Number(r.month)
       const count = Number(r.count ?? 0)
 
       if (!result[year]) result[year] = {}
-      result[year][monthNum] = count
+      result[year][r.month] = count
     }
 
     return result
