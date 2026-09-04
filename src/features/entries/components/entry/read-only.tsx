@@ -40,7 +40,7 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
           <div className="size-8" />
         )}
       </div>
-      <h5 className="font-bold">{entry.title}</h5>
+      <h5 className="my-2 font-bold">{entry.title}</h5>
       <ScrollArea className="min-h-0 flex-1">
         <div
           dangerouslySetInnerHTML={{ __html: entry.text }}

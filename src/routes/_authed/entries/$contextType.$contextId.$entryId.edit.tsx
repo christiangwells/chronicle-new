@@ -1,7 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 
 import { Card, CardContent } from '~/components/ui/card'
+import { EditEntry } from '~/features/entries/components/entry/edit'
 import { getEntryByUuid } from '~/features/entries/data/get-by-uuid'
+import { updateEntry } from '~/features/entries/data/update'
+import type { EntryInput } from '~/features/entries/lib'
 
 export const Route = createFileRoute(
   '/_authed/entries/$contextType/$contextId/$entryId/edit',
@@ -13,12 +16,34 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const entry = Route.useLoaderData()
+  const params = Route.useParams()
+  const router = useRouter()
+
+  const navigateToEntry = () => {
+    router.navigate({ to: '/entries/$contextType/$contextId/$entryId', params })
+  }
+
+  const onSubmit = async (input: EntryInput) => {
+    await updateEntry({ data: { id: entry.id, input } })
+    await router.invalidate()
+    navigateToEntry()
+  }
+
+  const onDelete = () => {
+    // TODO: server function to delete
+    router.navigate({ to: '/entries/$contextType/$contextId', params })
+  }
 
   return (
     <div className="top-(--header-height) h-[calc(100svh-var(--header-height))]! p-4">
       <Card className="h-full">
         <CardContent className="flex h-full flex-col">
-          Editing entry {entry.uuid}
+          <EditEntry
+            entry={entry}
+            onCancel={navigateToEntry}
+            onSubmit={onSubmit}
+            onDelete={onDelete}
+          />
         </CardContent>
       </Card>
     </div>

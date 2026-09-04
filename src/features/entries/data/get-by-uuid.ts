@@ -25,7 +25,12 @@ export const getEntryByUuid = createServerFn()
 
       const entry = await prisma.entry.findUniqueOrThrow({
         where: { uuid, authorId: userId },
-        include: { tags: true },
+        // TODO: this is not the order the tags were selected, which will look off a little bit
+        // This is preferable to id which will be order of when they were created (globally for
+        // the user) but ideally it would be selection order. Would need to make a custom many-
+        // to-many table for that, which makes things a little less nice and simple in prisma.
+        // Will also need to do this for other queries on entries
+        include: { tags: { orderBy: { text: 'asc' } } },
       })
 
       // If this is being retrieved as part of a context, validate that it's valid in that

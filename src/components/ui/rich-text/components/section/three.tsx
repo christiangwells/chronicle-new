@@ -179,7 +179,7 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger>
         <ToolbarButton
           tooltip="Text color"
           aria-label="Text color"

@@ -4,7 +4,7 @@
 @import './partials/typography.css';
 @import './partials/zoom.css';
 
-@reference "../../../global.css";
+@reference "../../../../styles.css";
 
 :root {
   --mt-overlay: rgba(251, 251, 251, 0.75);
@@ -101,6 +101,8 @@
 .minimal-tiptap-editor .ProseMirror {
   @apply flex max-w-full cursor-text flex-col;
   @apply z-0 outline-0;
+  @apply h-full;
+  @apply px-3 py-1;
 }
 
 .minimal-tiptap-editor .ProseMirror > div.editor {

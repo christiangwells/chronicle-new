@@ -20,6 +20,7 @@ import {
   getEntriesByTag,
 } from '~/features/entries/data'
 import { EntryContextType } from '~/features/entries/types'
+import { useIsMobile } from '~/hooks/use-mobile'
 import { assertUnreachable } from '~/lib/utils'
 
 export const Route = createFileRoute(
@@ -44,11 +45,18 @@ function RouteComponent() {
   const { contextType, contextId } = Route.useParams()
   const matchRoute = useMatchRoute()
   const entries = Route.useLoaderData()
+  const isMobile = useIsMobile()
 
   const isEntrySelected = !!matchRoute({
     to: '/entries/$contextType/$contextId/$entryId',
     fuzzy: true,
   })
+
+  // TODO: figure something else out for this - it means that the main component below is re-rendered
+  // when an entry is closed, which loses the scroll position
+  if (isEntrySelected && isMobile) {
+    return <Outlet />
+  }
 
   return (
     <ResizablePanelGroup

@@ -1,5 +1,3 @@
-import './styles/index.css'
-
 import type { Content, Editor } from '@tiptap/react'
 import { EditorContent, EditorContext } from '@tiptap/react'
 
@@ -16,6 +14,8 @@ import { SectionTwo } from './components/section/two'
 import { useMinimalTiptapEditor } from './hooks/use-minimal-tiptap'
 import type { UseMinimalTiptapEditorProps } from './hooks/use-minimal-tiptap'
 import { useTiptapEditor } from './hooks/use-tiptap-editor'
+
+import './styles/index.css'
 
 export interface MinimalTiptapProps extends Omit<
   UseMinimalTiptapEditorProps,
@@ -123,11 +123,14 @@ export const MainMinimalTiptapEditor = ({
         className,
       )}
     >
-      <Toolbar editor={editor} />
       <EditorContent
         editor={editor}
-        className={cn('minimal-tiptap-editor', editorContentClassName)}
+        className={cn(
+          'minimal-tiptap-editor min-h-0 flex-1',
+          editorContentClassName,
+        )}
       />
+      <Toolbar editor={editor} />
       <LinkBubbleMenu editor={editor} />
     </MeasuredContainer>
   )
