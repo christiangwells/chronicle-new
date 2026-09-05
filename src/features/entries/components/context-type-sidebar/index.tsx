@@ -34,7 +34,7 @@ const contextTypeButtonData = [
 ]
 
 interface EntryContextTypeSidebarProps {
-  selectedContextType?: EntryContextType | 'search'
+  selectedContextType?: EntryContextType | 'search' | 'new'
 }
 
 export const EntryContextTypeSidebar: React.FC<
@@ -44,9 +44,14 @@ export const EntryContextTypeSidebar: React.FC<
     <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!">
       <SidebarHeader>
         <SidebarMenu className="flex flex-row justify-between">
-          {/* TODO: create a standalone create entry route */}
-          <Button variant="secondary" size="icon-sm">
-            <PlusIcon />
+          <Button
+            variant={selectedContextType === 'new' ? 'default' : 'secondary'}
+            size="icon-sm"
+            asChild
+          >
+            <Link to="/entries/new">
+              <PlusIcon />
+            </Link>
           </Button>
           <ButtonGroup>
             {contextTypeButtonData.map(({ contextType, icon }, index, arr) => (
@@ -77,6 +82,7 @@ export const EntryContextTypeSidebar: React.FC<
           <Button
             variant={selectedContextType === 'search' ? 'default' : 'secondary'}
             size="icon-sm"
+            asChild
           >
             <Link to="/entries/search">
               <SearchIcon />
@@ -91,9 +97,9 @@ export const EntryContextTypeSidebar: React.FC<
   )
 }
 
-const Content: React.FC<{ contextType?: EntryContextType | 'search' }> = ({
-  contextType,
-}) => {
+const Content: React.FC<{
+  contextType?: EntryContextType | 'search' | 'new'
+}> = ({ contextType }) => {
   if (contextType === EntryContextType.month) {
     return <EntryMonths />
   } else if (contextType === EntryContextType.date) {
@@ -102,7 +108,7 @@ const Content: React.FC<{ contextType?: EntryContextType | 'search' }> = ({
     return 'tag'
   } else if (contextType === 'search') {
     return 'search'
-  } else if (contextType === undefined) {
+  } else if (contextType === 'new' || contextType === undefined) {
     return null
   } else {
     assertUnreachable(contextType)

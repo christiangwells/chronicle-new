@@ -24,7 +24,7 @@ import { useDisclosure } from '~/hooks/use-disclosure'
 interface EntryControlsProps {
   isDirty: boolean
   isSubmitting: boolean
-  entryId: number
+  entryId?: number
   onCancel: () => void
   onDelete: () => void
 }

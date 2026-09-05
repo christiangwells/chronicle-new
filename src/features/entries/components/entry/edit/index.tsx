@@ -1,5 +1,4 @@
 import { useForm } from '@tanstack/react-form'
-import dayjs from 'dayjs'
 import { CheckIcon } from 'lucide-react'
 import type React from 'react'
 
@@ -14,14 +13,15 @@ import type { EntryInput } from '~/features/entries/lib'
 import type { EntryWithTags } from '~/features/entries/types'
 import { TagsInput } from '~/features/tags/components/tags-input'
 import type { TagInput } from '~/features/tags/lib'
+import { toDateTimeLocal } from '~/lib/dates'
 
 import { EntryControls } from './controls'
 
 interface EditEntryProps {
-  entry: EntryWithTags
+  entry?: EntryWithTags
   onCancel: () => void
   onSubmit: (entry: EntryInput) => void | Promise<void>
-  onDelete: () => void
+  onDelete: () => void // TODO: This could probably move to the read-only component
 }
 
 export const EditEntry: React.FC<EditEntryProps> = ({
@@ -31,18 +31,7 @@ export const EditEntry: React.FC<EditEntryProps> = ({
   onDelete,
 }) => {
   const form = useForm({
-    defaultValues: {
-      date: toDateTimeLocal(entry.date),
-      title: entry.title ?? '',
-      text: entry.text,
-      tags: entry.tags.map(
-        (tag): TagInput => ({
-          type: 'existing',
-          id: tag.id,
-          text: tag.text,
-        }),
-      ),
-    },
+    defaultValues: getDefaultValues(entry),
     validators: {
       onSubmit: entrySchema,
     },
@@ -66,7 +55,7 @@ export const EditEntry: React.FC<EditEntryProps> = ({
         <EntryControls
           isDirty={form.state.isDirty}
           isSubmitting={form.state.isSubmitting}
-          entryId={entry.id}
+          entryId={entry?.id}
           onCancel={onCancel}
           onDelete={onDelete}
         />
@@ -147,6 +136,26 @@ export const EditEntry: React.FC<EditEntryProps> = ({
   )
 }
 
-function toDateTimeLocal(date: Date) {
-  return dayjs(date).format('YYYY-MM-DDTHH:mm')
+function getDefaultValues(entry?: EntryWithTags) {
+  if (!entry) {
+    return {
+      date: toDateTimeLocal(new Date()),
+      title: '',
+      text: '',
+      tags: [],
+    }
+  }
+
+  return {
+    date: toDateTimeLocal(entry.date), // TODO: does this actually make sense? Can't it just be kept as UTC?
+    title: entry.title ?? '',
+    text: entry.text,
+    tags: entry.tags.map(
+      (tag): TagInput => ({
+        type: 'existing',
+        id: tag.id,
+        text: tag.text,
+      }),
+    ),
+  }
 }

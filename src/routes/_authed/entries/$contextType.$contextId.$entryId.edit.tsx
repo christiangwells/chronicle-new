@@ -2,6 +2,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router'
 
 import { Card, CardContent } from '~/components/ui/card'
 import { EditEntry } from '~/features/entries/components/entry/edit'
+import { deleteEntry } from '~/features/entries/data/delete'
 import { getEntryByUuid } from '~/features/entries/data/get-by-uuid'
 import { updateEntry } from '~/features/entries/data/update'
 import type { EntryInput } from '~/features/entries/lib'
@@ -29,8 +30,9 @@ function RouteComponent() {
     navigateToEntry()
   }
 
-  const onDelete = () => {
-    // TODO: server function to delete
+  const onDelete = async () => {
+    await deleteEntry({ data: { id: entry.id } })
+    await router.invalidate()
     router.navigate({ to: '/entries/$contextType/$contextId', params })
   }
 

@@ -27,6 +27,10 @@ export const entrySchema = z
     })
   })
 
+export const createEntrySchema = z.object({
+  input: entrySchema,
+})
+
 export const updateEntrySchema = z.object({
   id: z.number().int().positive(),
   input: entrySchema,

@@ -1,14 +1,14 @@
 import { createServerFn } from '@tanstack/react-start'
 
 import { prisma } from '~/db'
-import { updateEntrySchema } from '~/features/entries/lib'
+import { createEntrySchema } from '~/features/entries/lib'
 import type { EntryWithTags } from '~/features/entries/types'
 import { authMiddleware } from '~/lib/auth/middleware'
 
-export const updateEntry = createServerFn()
+export const createEntry = createServerFn()
   .middleware([authMiddleware])
-  .inputValidator(updateEntrySchema)
-  .handler(async ({ context, data: { id, input } }): Promise<EntryWithTags> => {
+  .inputValidator(createEntrySchema)
+  .handler(async ({ context, data: { input } }): Promise<EntryWithTags> => {
     const userId = context.session.user.id
     const userTags = await prisma.tag.findMany({ where: { userId } })
     const tagsById = new Map(userTags.map((tag) => [tag.id, tag]))
@@ -35,14 +35,14 @@ export const updateEntry = createServerFn()
       }
     }
 
-    return prisma.entry.update({
-      where: { id, authorId: userId },
+    return prisma.entry.create({
       data: {
         date: new Date(input.date),
         title: input.title?.trim() || null,
         text: input.text,
+        authorId: userId,
         tags: {
-          set: existingTagIds.map((tagId) => ({ id: tagId })),
+          connect: existingTagIds.map((tagId) => ({ id: tagId })),
           connectOrCreate: newTagTexts.map((text) => ({
             where: { text_userId: { text, userId } },
             create: { text, userId },
