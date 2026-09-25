@@ -1,4 +1,4 @@
-import { ArchiveXIcon, Trash2Icon, XIcon } from 'lucide-react'
+import { ArchiveXIcon, Trash2Icon } from 'lucide-react'
 import type React from 'react'
 
 import {

@@ -25,3 +25,8 @@ export interface EntriesStats {
   firstDate: Date | null
   latestDate: Date | null
 }
+
+// To make reading grouped types easier
+export type Year = string
+export type Month = string
+export type Day = string

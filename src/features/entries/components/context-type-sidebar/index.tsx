@@ -25,6 +25,7 @@ import {
 import { EntryContextType } from '~/features/entries/types'
 import { assertUnreachable } from '~/lib/utils'
 
+import { EntryDates } from './date'
 import { EntryMonths } from './month'
 
 const contextTypeButtonData = [
@@ -103,7 +104,7 @@ const Content: React.FC<{
   if (contextType === EntryContextType.month) {
     return <EntryMonths />
   } else if (contextType === EntryContextType.date) {
-    return 'date'
+    return <EntryDates />
   } else if (contextType === EntryContextType.tag) {
     return 'tag'
   } else if (contextType === 'search') {
