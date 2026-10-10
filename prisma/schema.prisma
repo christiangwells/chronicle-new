@@ -98,10 +98,3 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
-
-// TODO: delete before the initial migration, just to make tanstack start work 
-model Todo {
-  id        Int      @id @default(autoincrement())
-  title     String
-  createdAt DateTime @default(now())
-}

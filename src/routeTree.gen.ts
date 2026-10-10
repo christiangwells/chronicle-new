@@ -11,31 +11,18 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as HealthRouteImport } from './routes/health'
-import { Route as DemoRouteRouteImport } from './routes/demo/route'
 import { Route as UnauthedRouteRouteImport } from './routes/_unauthed/route'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoIndexRouteImport } from './routes/demo/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
-import { Route as DemoPrismaRouteImport } from './routes/demo/prisma'
 import { Route as UnauthedRegisterRouteImport } from './routes/_unauthed/register'
 import { Route as UnauthedLoginRouteImport } from './routes/_unauthed/login'
 import { Route as AuthedEntriesRouteRouteImport } from './routes/_authed/entries/route'
 import { Route as AuthedEntriesIndexRouteImport } from './routes/_authed/entries/index'
-import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
-import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
-import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
-import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
-import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedEntriesSearchRouteImport } from './routes/_authed/entries/search'
 import { Route as AuthedEntriesNewRouteImport } from './routes/_authed/entries/new'
 import { Route as AuthedEntriesContextTypeRouteImport } from './routes/_authed/entries/$contextType'
-import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
 import { Route as AuthedEntriesContextTypeIndexRouteImport } from './routes/_authed/entries/$contextType.index'
-import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
-import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
-import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 import { Route as AuthedEntriesContextTypeContextIdRouteImport } from './routes/_authed/entries/$contextType.$contextId'
 import { Route as AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId.index'
 import { Route as AuthedEntriesContextTypeContextIdEntryIdEditRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId.edit'
@@ -50,11 +37,6 @@ const HealthRoute = HealthRouteImport.update({
   path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoRouteRoute = DemoRouteRouteImport.update({
-  id: '/demo',
-  path: '/demo',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const UnauthedRouteRoute = UnauthedRouteRouteImport.update({
   id: '/_unauthed',
   getParentRoute: () => rootRouteImport,
@@ -67,21 +49,6 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const DemoIndexRoute = DemoIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/tanstack-query',
-  path: '/tanstack-query',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoPrismaRoute = DemoPrismaRouteImport.update({
-  id: '/prisma',
-  path: '/prisma',
-  getParentRoute: () => DemoRouteRoute,
 } as any)
 const UnauthedRegisterRoute = UnauthedRegisterRouteImport.update({
   id: '/register',
@@ -102,31 +69,6 @@ const AuthedEntriesIndexRoute = AuthedEntriesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthedEntriesRouteRoute,
-} as any)
-const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
-  id: '/start/server-funcs',
-  path: '/start/server-funcs',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoStartApiRequestRoute = DemoStartApiRequestRouteImport.update({
-  id: '/start/api-request',
-  path: '/start/api-request',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoFormSimpleRoute = DemoFormSimpleRouteImport.update({
-  id: '/form/simple',
-  path: '/form/simple',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoFormAddressRoute = DemoFormAddressRouteImport.update({
-  id: '/form/address',
-  path: '/form/address',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
-  id: '/api/names',
-  path: '/api/names',
-  getParentRoute: () => DemoRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -149,32 +91,12 @@ const AuthedEntriesContextTypeRoute =
     path: '/$contextType',
     getParentRoute: () => AuthedEntriesRouteRoute,
   } as any)
-const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
-  id: '/start/ssr/',
-  path: '/start/ssr/',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
 const AuthedEntriesContextTypeIndexRoute =
   AuthedEntriesContextTypeIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthedEntriesContextTypeRoute,
   } as any)
-const DemoStartSsrSpaModeRoute = DemoStartSsrSpaModeRouteImport.update({
-  id: '/start/ssr/spa-mode',
-  path: '/start/ssr/spa-mode',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoStartSsrFullSsrRoute = DemoStartSsrFullSsrRouteImport.update({
-  id: '/start/ssr/full-ssr',
-  path: '/start/ssr/full-ssr',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
-const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
-  id: '/start/ssr/data-only',
-  path: '/start/ssr/data-only',
-  getParentRoute: () => DemoRouteRoute,
-} as any)
 const AuthedEntriesContextTypeContextIdRoute =
   AuthedEntriesContextTypeContextIdRouteImport.update({
     id: '/$contextId',
@@ -196,31 +118,18 @@ const AuthedEntriesContextTypeContextIdEntryIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/demo': typeof DemoRouteRouteWithChildren
   '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
   '/entries': typeof AuthedEntriesRouteRouteWithChildren
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
-  '/demo/prisma': typeof DemoPrismaRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/': typeof DemoIndexRoute
   '/entries/$contextType': typeof AuthedEntriesContextTypeRouteWithChildren
   '/entries/new': typeof AuthedEntriesNewRoute
   '/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/entries/': typeof AuthedEntriesIndexRoute
   '/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdRouteWithChildren
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
-  '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
   '/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
   '/entries/$contextType/$contextId/$entryId/': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
@@ -230,24 +139,12 @@ export interface FileRoutesByTo {
   '/logout': typeof LogoutRoute
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
-  '/demo/prisma': typeof DemoPrismaRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo': typeof DemoIndexRoute
   '/entries/new': typeof AuthedEntriesNewRoute
   '/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/entries': typeof AuthedEntriesIndexRoute
   '/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdRouteWithChildren
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/entries/$contextType': typeof AuthedEntriesContextTypeIndexRoute
-  '/demo/start/ssr': typeof DemoStartSsrIndexRoute
   '/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
   '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
@@ -256,31 +153,18 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteRouteWithChildren
   '/_unauthed': typeof UnauthedRouteRouteWithChildren
-  '/demo': typeof DemoRouteRouteWithChildren
   '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
   '/_authed/entries': typeof AuthedEntriesRouteRouteWithChildren
   '/_unauthed/login': typeof UnauthedLoginRoute
   '/_unauthed/register': typeof UnauthedRegisterRoute
-  '/demo/prisma': typeof DemoPrismaRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/demo/': typeof DemoIndexRoute
   '/_authed/entries/$contextType': typeof AuthedEntriesContextTypeRouteWithChildren
   '/_authed/entries/new': typeof AuthedEntriesNewRoute
   '/_authed/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/_authed/entries/': typeof AuthedEntriesIndexRoute
   '/_authed/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdRouteWithChildren
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
   '/_authed/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
-  '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
   '/_authed/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
   '/_authed/entries/$contextType/$contextId/$entryId/': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
 }
@@ -288,31 +172,18 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/demo'
     | '/health'
     | '/logout'
     | '/entries'
     | '/login'
     | '/register'
-    | '/demo/prisma'
-    | '/demo/tanstack-query'
-    | '/demo/'
     | '/entries/$contextType'
     | '/entries/new'
     | '/entries/search'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/form/address'
-    | '/demo/form/simple'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/entries/'
     | '/entries/$contextType/$contextId'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
     | '/entries/$contextType/'
-    | '/demo/start/ssr/'
     | '/entries/$contextType/$contextId/$entryId/edit'
     | '/entries/$contextType/$contextId/$entryId/'
   fileRoutesByTo: FileRoutesByTo
@@ -322,24 +193,12 @@ export interface FileRouteTypes {
     | '/logout'
     | '/login'
     | '/register'
-    | '/demo/prisma'
-    | '/demo/tanstack-query'
-    | '/demo'
     | '/entries/new'
     | '/entries/search'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/form/address'
-    | '/demo/form/simple'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/entries'
     | '/entries/$contextType/$contextId'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
     | '/entries/$contextType'
-    | '/demo/start/ssr'
     | '/entries/$contextType/$contextId/$entryId/edit'
     | '/entries/$contextType/$contextId/$entryId'
   id:
@@ -347,31 +206,18 @@ export interface FileRouteTypes {
     | '/'
     | '/_authed'
     | '/_unauthed'
-    | '/demo'
     | '/health'
     | '/logout'
     | '/_authed/entries'
     | '/_unauthed/login'
     | '/_unauthed/register'
-    | '/demo/prisma'
-    | '/demo/tanstack-query'
-    | '/demo/'
     | '/_authed/entries/$contextType'
     | '/_authed/entries/new'
     | '/_authed/entries/search'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/form/address'
-    | '/demo/form/simple'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/_authed/entries/'
     | '/_authed/entries/$contextType/$contextId'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
     | '/_authed/entries/$contextType/'
-    | '/demo/start/ssr/'
     | '/_authed/entries/$contextType/$contextId/$entryId/edit'
     | '/_authed/entries/$contextType/$contextId/$entryId/'
   fileRoutesById: FileRoutesById
@@ -380,7 +226,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRouteRoute: typeof AuthedRouteRouteWithChildren
   UnauthedRouteRoute: typeof UnauthedRouteRouteWithChildren
-  DemoRouteRoute: typeof DemoRouteRouteWithChildren
   HealthRoute: typeof HealthRoute
   LogoutRoute: typeof LogoutRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -400,13 +245,6 @@ declare module '@tanstack/react-router' {
       path: '/health'
       fullPath: '/health'
       preLoaderRoute: typeof HealthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo': {
-      id: '/demo'
-      path: '/demo'
-      fullPath: '/demo'
-      preLoaderRoute: typeof DemoRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_unauthed': {
@@ -429,27 +267,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/demo/': {
-      id: '/demo/'
-      path: '/'
-      fullPath: '/demo/'
-      preLoaderRoute: typeof DemoIndexRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/prisma': {
-      id: '/demo/prisma'
-      path: '/prisma'
-      fullPath: '/demo/prisma'
-      preLoaderRoute: typeof DemoPrismaRouteImport
-      parentRoute: typeof DemoRouteRoute
     }
     '/_unauthed/register': {
       id: '/_unauthed/register'
@@ -479,41 +296,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesIndexRouteImport
       parentRoute: typeof AuthedEntriesRouteRoute
     }
-    '/demo/start/server-funcs': {
-      id: '/demo/start/server-funcs'
-      path: '/start/server-funcs'
-      fullPath: '/demo/start/server-funcs'
-      preLoaderRoute: typeof DemoStartServerFuncsRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/start/api-request': {
-      id: '/demo/start/api-request'
-      path: '/start/api-request'
-      fullPath: '/demo/start/api-request'
-      preLoaderRoute: typeof DemoStartApiRequestRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/form/simple': {
-      id: '/demo/form/simple'
-      path: '/form/simple'
-      fullPath: '/demo/form/simple'
-      preLoaderRoute: typeof DemoFormSimpleRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/form/address': {
-      id: '/demo/form/address'
-      path: '/form/address'
-      fullPath: '/demo/form/address'
-      preLoaderRoute: typeof DemoFormAddressRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/api/names': {
-      id: '/demo/api/names'
-      path: '/api/names'
-      fullPath: '/demo/api/names'
-      preLoaderRoute: typeof DemoApiNamesRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -542,40 +324,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesContextTypeRouteImport
       parentRoute: typeof AuthedEntriesRouteRoute
     }
-    '/demo/start/ssr/': {
-      id: '/demo/start/ssr/'
-      path: '/start/ssr'
-      fullPath: '/demo/start/ssr/'
-      preLoaderRoute: typeof DemoStartSsrIndexRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
     '/_authed/entries/$contextType/': {
       id: '/_authed/entries/$contextType/'
       path: '/'
       fullPath: '/entries/$contextType/'
       preLoaderRoute: typeof AuthedEntriesContextTypeIndexRouteImport
       parentRoute: typeof AuthedEntriesContextTypeRoute
-    }
-    '/demo/start/ssr/spa-mode': {
-      id: '/demo/start/ssr/spa-mode'
-      path: '/start/ssr/spa-mode'
-      fullPath: '/demo/start/ssr/spa-mode'
-      preLoaderRoute: typeof DemoStartSsrSpaModeRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/start/ssr/full-ssr': {
-      id: '/demo/start/ssr/full-ssr'
-      path: '/start/ssr/full-ssr'
-      fullPath: '/demo/start/ssr/full-ssr'
-      preLoaderRoute: typeof DemoStartSsrFullSsrRouteImport
-      parentRoute: typeof DemoRouteRoute
-    }
-    '/demo/start/ssr/data-only': {
-      id: '/demo/start/ssr/data-only'
-      path: '/start/ssr/data-only'
-      fullPath: '/demo/start/ssr/data-only'
-      preLoaderRoute: typeof DemoStartSsrDataOnlyRouteImport
-      parentRoute: typeof DemoRouteRoute
     }
     '/_authed/entries/$contextType/$contextId': {
       id: '/_authed/entries/$contextType/$contextId'
@@ -679,45 +433,10 @@ const UnauthedRouteRouteWithChildren = UnauthedRouteRoute._addFileChildren(
   UnauthedRouteRouteChildren,
 )
 
-interface DemoRouteRouteChildren {
-  DemoPrismaRoute: typeof DemoPrismaRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
-  DemoIndexRoute: typeof DemoIndexRoute
-  DemoApiNamesRoute: typeof DemoApiNamesRoute
-  DemoFormAddressRoute: typeof DemoFormAddressRoute
-  DemoFormSimpleRoute: typeof DemoFormSimpleRoute
-  DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
-  DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
-  DemoStartSsrDataOnlyRoute: typeof DemoStartSsrDataOnlyRoute
-  DemoStartSsrFullSsrRoute: typeof DemoStartSsrFullSsrRoute
-  DemoStartSsrSpaModeRoute: typeof DemoStartSsrSpaModeRoute
-  DemoStartSsrIndexRoute: typeof DemoStartSsrIndexRoute
-}
-
-const DemoRouteRouteChildren: DemoRouteRouteChildren = {
-  DemoPrismaRoute: DemoPrismaRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
-  DemoIndexRoute: DemoIndexRoute,
-  DemoApiNamesRoute: DemoApiNamesRoute,
-  DemoFormAddressRoute: DemoFormAddressRoute,
-  DemoFormSimpleRoute: DemoFormSimpleRoute,
-  DemoStartApiRequestRoute: DemoStartApiRequestRoute,
-  DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
-  DemoStartSsrDataOnlyRoute: DemoStartSsrDataOnlyRoute,
-  DemoStartSsrFullSsrRoute: DemoStartSsrFullSsrRoute,
-  DemoStartSsrSpaModeRoute: DemoStartSsrSpaModeRoute,
-  DemoStartSsrIndexRoute: DemoStartSsrIndexRoute,
-}
-
-const DemoRouteRouteWithChildren = DemoRouteRoute._addFileChildren(
-  DemoRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRouteRoute: AuthedRouteRouteWithChildren,
   UnauthedRouteRoute: UnauthedRouteRouteWithChildren,
-  DemoRouteRoute: DemoRouteRouteWithChildren,
   HealthRoute: HealthRoute,
   LogoutRoute: LogoutRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
