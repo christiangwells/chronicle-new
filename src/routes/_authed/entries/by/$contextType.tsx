@@ -6,9 +6,7 @@ import {
   type EntryContextType,
 } from '~/features/entries/types'
 
-// TODO: this should be nested under /by/* to free up /entries/{uuid}
-
-export const Route = createFileRoute('/_authed/entries/$contextType')({
+export const Route = createFileRoute('/_authed/entries/by/$contextType')({
   component: RouteComponent,
   params: {
     parse: (params): { contextType: EntryContextType } => {

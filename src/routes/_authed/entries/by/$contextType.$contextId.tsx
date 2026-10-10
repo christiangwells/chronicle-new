@@ -24,7 +24,7 @@ import { useIsMobile } from '~/hooks/use-mobile'
 import { assertUnreachable } from '~/lib/utils'
 
 export const Route = createFileRoute(
-  '/_authed/entries/$contextType/$contextId',
+  '/_authed/entries/by/$contextType/$contextId',
 )({
   loader: ({ params: { contextType, contextId } }) => {
     switch (contextType) {
@@ -48,7 +48,7 @@ function RouteComponent() {
   const isMobile = useIsMobile()
 
   const isEntrySelected = !!matchRoute({
-    to: '/entries/$contextType/$contextId/$entryId',
+    to: '/entries/by/$contextType/$contextId/$entryId',
     fuzzy: true,
   })
 
@@ -79,7 +79,7 @@ function RouteComponent() {
             {entries.map((entry) => (
               <Link
                 key={entry.id}
-                to="/entries/$contextType/$contextId/$entryId"
+                to="/entries/by/$contextType/$contextId/$entryId"
                 params={{
                   contextType,
                   contextId,

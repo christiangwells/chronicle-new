@@ -68,7 +68,10 @@ export const EntryContextTypeSidebar: React.FC<
                       size="icon-sm"
                       asChild
                     >
-                      <Link to="/entries/$contextType" params={{ contextType }}>
+                      <Link
+                        to="/entries/by/$contextType"
+                        params={{ contextType }}
+                      >
                         {icon}
                       </Link>
                     </Button>

@@ -63,14 +63,14 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
 function useCloseRoute() {
   const matchRoute = useMatchRoute()
   const contextMatch = matchRoute({
-    to: '/entries/$contextType/$contextId',
+    to: '/entries/by/$contextType/$contextId',
     fuzzy: true,
   })
   // TODO: standalone match when that's a route?
 
   if (contextMatch) {
     return {
-      to: '/entries/$contextType/$contextId',
+      to: '/entries/by/$contextType/$contextId',
       params: contextMatch,
     } as const
   }
@@ -81,14 +81,14 @@ function useCloseRoute() {
 function useEditRoute() {
   const matchRoute = useMatchRoute()
   const contextMatch = matchRoute({
-    to: '/entries/$contextType/$contextId/$entryId',
+    to: '/entries/by/$contextType/$contextId/$entryId',
     fuzzy: true,
   })
   // TODO: standalone match when that's a route?
 
   if (contextMatch) {
     return {
-      to: '/entries/$contextType/$contextId/$entryId/edit',
+      to: '/entries/by/$contextType/$contextId/$entryId/edit',
       params: contextMatch,
     } as const
   }

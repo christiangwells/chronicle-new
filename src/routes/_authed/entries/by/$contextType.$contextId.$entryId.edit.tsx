@@ -8,7 +8,7 @@ import { updateEntry } from '~/features/entries/data/update'
 import type { EntryInput } from '~/features/entries/lib'
 
 export const Route = createFileRoute(
-  '/_authed/entries/$contextType/$contextId/$entryId/edit',
+  '/_authed/entries/by/$contextType/$contextId/$entryId/edit',
 )({
   loader: ({ params: { contextType, contextId, entryId } }) =>
     getEntryByUuid({ data: { contextType, contextId, uuid: entryId } }),
@@ -21,7 +21,10 @@ function RouteComponent() {
   const router = useRouter()
 
   const navigateToEntry = () => {
-    router.navigate({ to: '/entries/$contextType/$contextId/$entryId', params })
+    router.navigate({
+      to: '/entries/by/$contextType/$contextId/$entryId',
+      params,
+    })
   }
 
   const onSubmit = async (input: EntryInput) => {
@@ -33,7 +36,7 @@ function RouteComponent() {
   const onDelete = async () => {
     await deleteEntry({ data: { id: entry.id } })
     await router.invalidate()
-    router.navigate({ to: '/entries/$contextType/$contextId', params })
+    router.navigate({ to: '/entries/by/$contextType/$contextId', params })
   }
 
   return (

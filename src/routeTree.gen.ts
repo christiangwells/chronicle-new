@@ -21,11 +21,11 @@ import { Route as AuthedEntriesIndexRouteImport } from './routes/_authed/entries
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedEntriesSearchRouteImport } from './routes/_authed/entries/search'
 import { Route as AuthedEntriesNewRouteImport } from './routes/_authed/entries/new'
-import { Route as AuthedEntriesContextTypeRouteImport } from './routes/_authed/entries/$contextType'
-import { Route as AuthedEntriesContextTypeIndexRouteImport } from './routes/_authed/entries/$contextType.index'
-import { Route as AuthedEntriesContextTypeContextIdRouteImport } from './routes/_authed/entries/$contextType.$contextId'
-import { Route as AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId.index'
-import { Route as AuthedEntriesContextTypeContextIdEntryIdEditRouteImport } from './routes/_authed/entries/$contextType.$contextId.$entryId.edit'
+import { Route as AuthedEntriesByContextTypeRouteImport } from './routes/_authed/entries/by/$contextType'
+import { Route as AuthedEntriesByContextTypeIndexRouteImport } from './routes/_authed/entries/by/$contextType.index'
+import { Route as AuthedEntriesByContextTypeContextIdRouteImport } from './routes/_authed/entries/by/$contextType.$contextId'
+import { Route as AuthedEntriesByContextTypeContextIdEntryIdIndexRouteImport } from './routes/_authed/entries/by/$contextType.$contextId.$entryId.index'
+import { Route as AuthedEntriesByContextTypeContextIdEntryIdEditRouteImport } from './routes/_authed/entries/by/$contextType.$contextId.$entryId.edit'
 
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
@@ -85,35 +85,35 @@ const AuthedEntriesNewRoute = AuthedEntriesNewRouteImport.update({
   path: '/new',
   getParentRoute: () => AuthedEntriesRouteRoute,
 } as any)
-const AuthedEntriesContextTypeRoute =
-  AuthedEntriesContextTypeRouteImport.update({
-    id: '/$contextType',
-    path: '/$contextType',
+const AuthedEntriesByContextTypeRoute =
+  AuthedEntriesByContextTypeRouteImport.update({
+    id: '/by/$contextType',
+    path: '/by/$contextType',
     getParentRoute: () => AuthedEntriesRouteRoute,
   } as any)
-const AuthedEntriesContextTypeIndexRoute =
-  AuthedEntriesContextTypeIndexRouteImport.update({
+const AuthedEntriesByContextTypeIndexRoute =
+  AuthedEntriesByContextTypeIndexRouteImport.update({
     id: '/',
     path: '/',
-    getParentRoute: () => AuthedEntriesContextTypeRoute,
+    getParentRoute: () => AuthedEntriesByContextTypeRoute,
   } as any)
-const AuthedEntriesContextTypeContextIdRoute =
-  AuthedEntriesContextTypeContextIdRouteImport.update({
+const AuthedEntriesByContextTypeContextIdRoute =
+  AuthedEntriesByContextTypeContextIdRouteImport.update({
     id: '/$contextId',
     path: '/$contextId',
-    getParentRoute: () => AuthedEntriesContextTypeRoute,
+    getParentRoute: () => AuthedEntriesByContextTypeRoute,
   } as any)
-const AuthedEntriesContextTypeContextIdEntryIdIndexRoute =
-  AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport.update({
+const AuthedEntriesByContextTypeContextIdEntryIdIndexRoute =
+  AuthedEntriesByContextTypeContextIdEntryIdIndexRouteImport.update({
     id: '/$entryId/',
     path: '/$entryId/',
-    getParentRoute: () => AuthedEntriesContextTypeContextIdRoute,
+    getParentRoute: () => AuthedEntriesByContextTypeContextIdRoute,
   } as any)
-const AuthedEntriesContextTypeContextIdEntryIdEditRoute =
-  AuthedEntriesContextTypeContextIdEntryIdEditRouteImport.update({
+const AuthedEntriesByContextTypeContextIdEntryIdEditRoute =
+  AuthedEntriesByContextTypeContextIdEntryIdEditRouteImport.update({
     id: '/$entryId/edit',
     path: '/$entryId/edit',
-    getParentRoute: () => AuthedEntriesContextTypeContextIdRoute,
+    getParentRoute: () => AuthedEntriesByContextTypeContextIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -123,15 +123,15 @@ export interface FileRoutesByFullPath {
   '/entries': typeof AuthedEntriesRouteRouteWithChildren
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
-  '/entries/$contextType': typeof AuthedEntriesContextTypeRouteWithChildren
   '/entries/new': typeof AuthedEntriesNewRoute
   '/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/entries/': typeof AuthedEntriesIndexRoute
-  '/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdRouteWithChildren
-  '/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
-  '/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
-  '/entries/$contextType/$contextId/$entryId/': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
+  '/entries/by/$contextType': typeof AuthedEntriesByContextTypeRouteWithChildren
+  '/entries/by/$contextType/$contextId': typeof AuthedEntriesByContextTypeContextIdRouteWithChildren
+  '/entries/by/$contextType/': typeof AuthedEntriesByContextTypeIndexRoute
+  '/entries/by/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
+  '/entries/by/$contextType/$contextId/$entryId/': typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -143,10 +143,10 @@ export interface FileRoutesByTo {
   '/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/entries': typeof AuthedEntriesIndexRoute
-  '/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdRouteWithChildren
-  '/entries/$contextType': typeof AuthedEntriesContextTypeIndexRoute
-  '/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
-  '/entries/$contextType/$contextId/$entryId': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
+  '/entries/by/$contextType/$contextId': typeof AuthedEntriesByContextTypeContextIdRouteWithChildren
+  '/entries/by/$contextType': typeof AuthedEntriesByContextTypeIndexRoute
+  '/entries/by/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
+  '/entries/by/$contextType/$contextId/$entryId': typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -158,15 +158,15 @@ export interface FileRoutesById {
   '/_authed/entries': typeof AuthedEntriesRouteRouteWithChildren
   '/_unauthed/login': typeof UnauthedLoginRoute
   '/_unauthed/register': typeof UnauthedRegisterRoute
-  '/_authed/entries/$contextType': typeof AuthedEntriesContextTypeRouteWithChildren
   '/_authed/entries/new': typeof AuthedEntriesNewRoute
   '/_authed/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/entries/': typeof AuthedEntriesIndexRoute
-  '/_authed/entries/$contextType/$contextId': typeof AuthedEntriesContextTypeContextIdRouteWithChildren
-  '/_authed/entries/$contextType/': typeof AuthedEntriesContextTypeIndexRoute
-  '/_authed/entries/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
-  '/_authed/entries/$contextType/$contextId/$entryId/': typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
+  '/_authed/entries/by/$contextType': typeof AuthedEntriesByContextTypeRouteWithChildren
+  '/_authed/entries/by/$contextType/$contextId': typeof AuthedEntriesByContextTypeContextIdRouteWithChildren
+  '/_authed/entries/by/$contextType/': typeof AuthedEntriesByContextTypeIndexRoute
+  '/_authed/entries/by/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
+  '/_authed/entries/by/$contextType/$contextId/$entryId/': typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -177,15 +177,15 @@ export interface FileRouteTypes {
     | '/entries'
     | '/login'
     | '/register'
-    | '/entries/$contextType'
     | '/entries/new'
     | '/entries/search'
     | '/api/auth/$'
     | '/entries/'
-    | '/entries/$contextType/$contextId'
-    | '/entries/$contextType/'
-    | '/entries/$contextType/$contextId/$entryId/edit'
-    | '/entries/$contextType/$contextId/$entryId/'
+    | '/entries/by/$contextType'
+    | '/entries/by/$contextType/$contextId'
+    | '/entries/by/$contextType/'
+    | '/entries/by/$contextType/$contextId/$entryId/edit'
+    | '/entries/by/$contextType/$contextId/$entryId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -197,10 +197,10 @@ export interface FileRouteTypes {
     | '/entries/search'
     | '/api/auth/$'
     | '/entries'
-    | '/entries/$contextType/$contextId'
-    | '/entries/$contextType'
-    | '/entries/$contextType/$contextId/$entryId/edit'
-    | '/entries/$contextType/$contextId/$entryId'
+    | '/entries/by/$contextType/$contextId'
+    | '/entries/by/$contextType'
+    | '/entries/by/$contextType/$contextId/$entryId/edit'
+    | '/entries/by/$contextType/$contextId/$entryId'
   id:
     | '__root__'
     | '/'
@@ -211,15 +211,15 @@ export interface FileRouteTypes {
     | '/_authed/entries'
     | '/_unauthed/login'
     | '/_unauthed/register'
-    | '/_authed/entries/$contextType'
     | '/_authed/entries/new'
     | '/_authed/entries/search'
     | '/api/auth/$'
     | '/_authed/entries/'
-    | '/_authed/entries/$contextType/$contextId'
-    | '/_authed/entries/$contextType/'
-    | '/_authed/entries/$contextType/$contextId/$entryId/edit'
-    | '/_authed/entries/$contextType/$contextId/$entryId/'
+    | '/_authed/entries/by/$contextType'
+    | '/_authed/entries/by/$contextType/$contextId'
+    | '/_authed/entries/by/$contextType/'
+    | '/_authed/entries/by/$contextType/$contextId/$entryId/edit'
+    | '/_authed/entries/by/$contextType/$contextId/$entryId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -317,91 +317,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesNewRouteImport
       parentRoute: typeof AuthedEntriesRouteRoute
     }
-    '/_authed/entries/$contextType': {
-      id: '/_authed/entries/$contextType'
-      path: '/$contextType'
-      fullPath: '/entries/$contextType'
-      preLoaderRoute: typeof AuthedEntriesContextTypeRouteImport
+    '/_authed/entries/by/$contextType': {
+      id: '/_authed/entries/by/$contextType'
+      path: '/by/$contextType'
+      fullPath: '/entries/by/$contextType'
+      preLoaderRoute: typeof AuthedEntriesByContextTypeRouteImport
       parentRoute: typeof AuthedEntriesRouteRoute
     }
-    '/_authed/entries/$contextType/': {
-      id: '/_authed/entries/$contextType/'
+    '/_authed/entries/by/$contextType/': {
+      id: '/_authed/entries/by/$contextType/'
       path: '/'
-      fullPath: '/entries/$contextType/'
-      preLoaderRoute: typeof AuthedEntriesContextTypeIndexRouteImport
-      parentRoute: typeof AuthedEntriesContextTypeRoute
+      fullPath: '/entries/by/$contextType/'
+      preLoaderRoute: typeof AuthedEntriesByContextTypeIndexRouteImport
+      parentRoute: typeof AuthedEntriesByContextTypeRoute
     }
-    '/_authed/entries/$contextType/$contextId': {
-      id: '/_authed/entries/$contextType/$contextId'
+    '/_authed/entries/by/$contextType/$contextId': {
+      id: '/_authed/entries/by/$contextType/$contextId'
       path: '/$contextId'
-      fullPath: '/entries/$contextType/$contextId'
-      preLoaderRoute: typeof AuthedEntriesContextTypeContextIdRouteImport
-      parentRoute: typeof AuthedEntriesContextTypeRoute
+      fullPath: '/entries/by/$contextType/$contextId'
+      preLoaderRoute: typeof AuthedEntriesByContextTypeContextIdRouteImport
+      parentRoute: typeof AuthedEntriesByContextTypeRoute
     }
-    '/_authed/entries/$contextType/$contextId/$entryId/': {
-      id: '/_authed/entries/$contextType/$contextId/$entryId/'
+    '/_authed/entries/by/$contextType/$contextId/$entryId/': {
+      id: '/_authed/entries/by/$contextType/$contextId/$entryId/'
       path: '/$entryId'
-      fullPath: '/entries/$contextType/$contextId/$entryId/'
-      preLoaderRoute: typeof AuthedEntriesContextTypeContextIdEntryIdIndexRouteImport
-      parentRoute: typeof AuthedEntriesContextTypeContextIdRoute
+      fullPath: '/entries/by/$contextType/$contextId/$entryId/'
+      preLoaderRoute: typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRouteImport
+      parentRoute: typeof AuthedEntriesByContextTypeContextIdRoute
     }
-    '/_authed/entries/$contextType/$contextId/$entryId/edit': {
-      id: '/_authed/entries/$contextType/$contextId/$entryId/edit'
+    '/_authed/entries/by/$contextType/$contextId/$entryId/edit': {
+      id: '/_authed/entries/by/$contextType/$contextId/$entryId/edit'
       path: '/$entryId/edit'
-      fullPath: '/entries/$contextType/$contextId/$entryId/edit'
-      preLoaderRoute: typeof AuthedEntriesContextTypeContextIdEntryIdEditRouteImport
-      parentRoute: typeof AuthedEntriesContextTypeContextIdRoute
+      fullPath: '/entries/by/$contextType/$contextId/$entryId/edit'
+      preLoaderRoute: typeof AuthedEntriesByContextTypeContextIdEntryIdEditRouteImport
+      parentRoute: typeof AuthedEntriesByContextTypeContextIdRoute
     }
   }
 }
 
-interface AuthedEntriesContextTypeContextIdRouteChildren {
-  AuthedEntriesContextTypeContextIdEntryIdEditRoute: typeof AuthedEntriesContextTypeContextIdEntryIdEditRoute
-  AuthedEntriesContextTypeContextIdEntryIdIndexRoute: typeof AuthedEntriesContextTypeContextIdEntryIdIndexRoute
+interface AuthedEntriesByContextTypeContextIdRouteChildren {
+  AuthedEntriesByContextTypeContextIdEntryIdEditRoute: typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
+  AuthedEntriesByContextTypeContextIdEntryIdIndexRoute: typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
 
-const AuthedEntriesContextTypeContextIdRouteChildren: AuthedEntriesContextTypeContextIdRouteChildren =
+const AuthedEntriesByContextTypeContextIdRouteChildren: AuthedEntriesByContextTypeContextIdRouteChildren =
   {
-    AuthedEntriesContextTypeContextIdEntryIdEditRoute:
-      AuthedEntriesContextTypeContextIdEntryIdEditRoute,
-    AuthedEntriesContextTypeContextIdEntryIdIndexRoute:
-      AuthedEntriesContextTypeContextIdEntryIdIndexRoute,
+    AuthedEntriesByContextTypeContextIdEntryIdEditRoute:
+      AuthedEntriesByContextTypeContextIdEntryIdEditRoute,
+    AuthedEntriesByContextTypeContextIdEntryIdIndexRoute:
+      AuthedEntriesByContextTypeContextIdEntryIdIndexRoute,
   }
 
-const AuthedEntriesContextTypeContextIdRouteWithChildren =
-  AuthedEntriesContextTypeContextIdRoute._addFileChildren(
-    AuthedEntriesContextTypeContextIdRouteChildren,
+const AuthedEntriesByContextTypeContextIdRouteWithChildren =
+  AuthedEntriesByContextTypeContextIdRoute._addFileChildren(
+    AuthedEntriesByContextTypeContextIdRouteChildren,
   )
 
-interface AuthedEntriesContextTypeRouteChildren {
-  AuthedEntriesContextTypeContextIdRoute: typeof AuthedEntriesContextTypeContextIdRouteWithChildren
-  AuthedEntriesContextTypeIndexRoute: typeof AuthedEntriesContextTypeIndexRoute
+interface AuthedEntriesByContextTypeRouteChildren {
+  AuthedEntriesByContextTypeContextIdRoute: typeof AuthedEntriesByContextTypeContextIdRouteWithChildren
+  AuthedEntriesByContextTypeIndexRoute: typeof AuthedEntriesByContextTypeIndexRoute
 }
 
-const AuthedEntriesContextTypeRouteChildren: AuthedEntriesContextTypeRouteChildren =
+const AuthedEntriesByContextTypeRouteChildren: AuthedEntriesByContextTypeRouteChildren =
   {
-    AuthedEntriesContextTypeContextIdRoute:
-      AuthedEntriesContextTypeContextIdRouteWithChildren,
-    AuthedEntriesContextTypeIndexRoute: AuthedEntriesContextTypeIndexRoute,
+    AuthedEntriesByContextTypeContextIdRoute:
+      AuthedEntriesByContextTypeContextIdRouteWithChildren,
+    AuthedEntriesByContextTypeIndexRoute: AuthedEntriesByContextTypeIndexRoute,
   }
 
-const AuthedEntriesContextTypeRouteWithChildren =
-  AuthedEntriesContextTypeRoute._addFileChildren(
-    AuthedEntriesContextTypeRouteChildren,
+const AuthedEntriesByContextTypeRouteWithChildren =
+  AuthedEntriesByContextTypeRoute._addFileChildren(
+    AuthedEntriesByContextTypeRouteChildren,
   )
 
 interface AuthedEntriesRouteRouteChildren {
-  AuthedEntriesContextTypeRoute: typeof AuthedEntriesContextTypeRouteWithChildren
   AuthedEntriesNewRoute: typeof AuthedEntriesNewRoute
   AuthedEntriesSearchRoute: typeof AuthedEntriesSearchRoute
   AuthedEntriesIndexRoute: typeof AuthedEntriesIndexRoute
+  AuthedEntriesByContextTypeRoute: typeof AuthedEntriesByContextTypeRouteWithChildren
 }
 
 const AuthedEntriesRouteRouteChildren: AuthedEntriesRouteRouteChildren = {
-  AuthedEntriesContextTypeRoute: AuthedEntriesContextTypeRouteWithChildren,
   AuthedEntriesNewRoute: AuthedEntriesNewRoute,
   AuthedEntriesSearchRoute: AuthedEntriesSearchRoute,
   AuthedEntriesIndexRoute: AuthedEntriesIndexRoute,
+  AuthedEntriesByContextTypeRoute: AuthedEntriesByContextTypeRouteWithChildren,
 }
 
 const AuthedEntriesRouteRouteWithChildren =

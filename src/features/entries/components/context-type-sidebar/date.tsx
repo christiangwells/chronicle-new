@@ -20,7 +20,7 @@ export const EntryDates: React.FC = () => {
   const scrollElementRef = useRef<HTMLDivElement>(null)
   const hasScrolledToInitialMonth = useRef(false)
   const selectedMatch = matchRoute({
-    to: '/entries/$contextType/$contextId',
+    to: '/entries/by/$contextType/$contextId',
     fuzzy: true,
   })
   const selected =
@@ -82,7 +82,7 @@ export const EntryDates: React.FC = () => {
                   selected={selected}
                   onSelect={(date) =>
                     navigate({
-                      to: '/entries/$contextType/$contextId',
+                      to: '/entries/by/$contextType/$contextId',
                       params: {
                         contextType: EntryContextType.date,
                         contextId: dayjs(date).format('YYYY-MM-DD'),

@@ -25,7 +25,7 @@ export const EntryMonths: React.FC = () => {
   const matchRoute = useMatchRoute()
 
   const match = matchRoute({
-    to: '/entries/$contextType/$contextId',
+    to: '/entries/by/$contextType/$contextId',
     fuzzy: true,
   })
   const selection = match ? dayjs(match.contextId) : null
@@ -72,7 +72,7 @@ export const EntryMonths: React.FC = () => {
                         <SidebarMenuSubItem key={`${year}-${month}`}>
                           <SidebarMenuSubButton asChild>
                             <Link
-                              to="/entries/$contextType/$contextId"
+                              to="/entries/by/$contextType/$contextId"
                               params={{
                                 contextType: EntryContextType.month,
                                 contextId: `${year}-${month}`,

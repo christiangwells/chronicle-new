@@ -19,7 +19,7 @@ function RouteComponent() {
     const entry = await createEntry({ data: { input } })
     await router.invalidate()
     router.navigate({
-      to: '/entries/$contextType/$contextId/$entryId',
+      to: '/entries/by/$contextType/$contextId/$entryId',
       params: {
         contextType: EntryContextType.date,
         contextId: toDateString(entry.date),

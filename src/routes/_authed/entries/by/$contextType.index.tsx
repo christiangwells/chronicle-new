@@ -5,14 +5,14 @@ import { getLatestEntryMonth } from '~/features/entries/data/get-latest-month'
 import { EntryContextType } from '~/features/entries/types'
 import { assertUnreachable } from '~/lib/utils'
 
-export const Route = createFileRoute('/_authed/entries/$contextType/')({
+export const Route = createFileRoute('/_authed/entries/by/$contextType/')({
   loader: async ({ params: { contextType } }) => {
     switch (contextType) {
       case EntryContextType.month: {
         const latestMonth = await getLatestEntryMonth()
         if (latestMonth)
           throw redirect({
-            to: '/entries/$contextType/$contextId',
+            to: '/entries/by/$contextType/$contextId',
             params: { contextType, contextId: latestMonth },
           })
         break
@@ -20,7 +20,7 @@ export const Route = createFileRoute('/_authed/entries/$contextType/')({
       case EntryContextType.date: {
         const now = dayjs()
         throw redirect({
-          to: '/entries/$contextType/$contextId',
+          to: '/entries/by/$contextType/$contextId',
           params: { contextType, contextId: now.format('YYYY-MM-DD') },
         })
       }
