@@ -7,7 +7,7 @@ import { authMiddleware } from '~/lib/auth/middleware'
 
 export const getEntriesByDate = createServerFn()
   .middleware([authMiddleware])
-  .inputValidator((data: { date: string }) => data)
+  .validator((data: { date: string }) => data)
   .handler(async ({ context, data: { date } }): Promise<EntryWithTags[]> => {
     const userId = context.session.user.id
 

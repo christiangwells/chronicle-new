@@ -6,7 +6,7 @@ import { authMiddleware } from '~/lib/auth/middleware'
 
 export const getEntriesByTag = createServerFn()
   .middleware([authMiddleware])
-  .inputValidator((data: { tag: string }) => data)
+  .validator((data: { tag: string }) => data)
   .handler(async ({ context, data: { tag } }): Promise<EntryWithTags[]> => {
     const userId = context.session.user.id
 

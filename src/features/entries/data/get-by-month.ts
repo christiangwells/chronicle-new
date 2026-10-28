@@ -7,7 +7,7 @@ import { authMiddleware } from '~/lib/auth/middleware'
 
 export const getEntriesByMonth = createServerFn()
   .middleware([authMiddleware])
-  .inputValidator((data: { month: string }) => data)
+  .validator((data: { month: string }) => data)
   .handler(async ({ context, data: { month } }): Promise<EntryWithTags[]> => {
     const userId = context.session.user.id
 

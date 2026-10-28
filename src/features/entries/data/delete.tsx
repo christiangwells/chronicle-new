@@ -5,7 +5,7 @@ import { authMiddleware } from '~/lib/auth/middleware'
 
 export const deleteEntry = createServerFn()
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ context, data: { id } }) => {
     const userId = context.session.user.id
 

@@ -7,7 +7,7 @@ import { authMiddleware } from '~/lib/auth/middleware'
 
 export const createEntry = createServerFn()
   .middleware([authMiddleware])
-  .inputValidator(createEntrySchema)
+  .validator(createEntrySchema)
   .handler(async ({ context, data: { input } }): Promise<EntryWithTags> => {
     const userId = context.session.user.id
     const userTags = await prisma.tag.findMany({ where: { userId } })

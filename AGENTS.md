@@ -87,7 +87,7 @@ A Husky pre-commit hook runs `lint-staged` (prettier + eslint on staged files).
 
 - Server functions live in `src/features/<feature>/data/*.ts`, one per file, built with `createServerFn()`.
 - Every user-data server function must use `.middleware([authMiddleware])` and scope queries by `context.session.user.id` (e.g. `where: { authorId: userId }`).
-- Validate input with `.inputValidator(...)`, preferably a zod schema from `src/features/<feature>/lib.ts`.
+- Validate input with `.validator(...)`, preferably a zod schema from `src/features/<feature>/lib.ts`.
 - Declare explicit return types on handlers (e.g. `Promise<EntryWithTags>`).
 - Route data is usually loaded in a route `loader` and read with `Route.useLoaderData()`. After mutations, call `router.invalidate()`.
 - Where TanStack Query is used, colocate a `use...Query` hook with the server function and wrap it with `useServerFn`.

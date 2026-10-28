@@ -9,7 +9,7 @@ import { assertUnreachable } from '~/lib/utils'
 
 export const getEntryByUuid = createServerFn()
   .middleware([authMiddleware])
-  .inputValidator(
+  .validator(
     (data: {
       contextType?: EntryContextType
       contextId?: string

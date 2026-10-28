@@ -9,26 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LogoutRouteImport } from './routes/logout'
-import { Route as HealthRouteImport } from './routes/health'
-import { Route as UnauthedRouteRouteImport } from './routes/_unauthed/route'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
+import { Route as UnauthedRouteRouteImport } from './routes/_unauthed/route'
+import { Route as HealthRouteImport } from './routes/health'
+import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
-import { Route as UnauthedRegisterRouteImport } from './routes/_unauthed/register'
 import { Route as UnauthedLoginRouteImport } from './routes/_unauthed/login'
+import { Route as UnauthedRegisterRouteImport } from './routes/_unauthed/register'
 import { Route as AuthedEntriesIndexRouteImport } from './routes/_authed/entries/index'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
-import { Route as AuthedEntriesSearchRouteImport } from './routes/_authed/entries/search'
 import { Route as AuthedEntriesNewRouteImport } from './routes/_authed/entries/new'
+import { Route as AuthedEntriesSearchRouteImport } from './routes/_authed/entries/search'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedEntriesByContextTypeRouteImport } from './routes/_authed/entries/by/$contextType'
 import { Route as AuthedEntriesByContextTypeIndexRouteImport } from './routes/_authed/entries/by/$contextType.index'
 import { Route as AuthedEntriesByContextTypeContextIdRouteImport } from './routes/_authed/entries/by/$contextType.$contextId'
 import { Route as AuthedEntriesByContextTypeContextIdEntryIdIndexRouteImport } from './routes/_authed/entries/by/$contextType.$contextId.$entryId.index'
 import { Route as AuthedEntriesByContextTypeContextIdEntryIdEditRouteImport } from './routes/_authed/entries/by/$contextType.$contextId.$entryId.edit'
 
-const LogoutRoute = LogoutRouteImport.update({
-  id: '/logout',
-  path: '/logout',
+const AuthedRouteRoute = AuthedRouteRouteImport.update({
+  id: '/_authed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnauthedRouteRoute = UnauthedRouteRouteImport.update({
+  id: '/_unauthed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HealthRoute = HealthRouteImport.update({
@@ -36,12 +39,9 @@ const HealthRoute = HealthRouteImport.update({
   path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UnauthedRouteRoute = UnauthedRouteRouteImport.update({
-  id: '/_unauthed',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthedRouteRoute = AuthedRouteRouteImport.update({
-  id: '/_authed',
+const LogoutRoute = LogoutRouteImport.update({
+  id: '/logout',
+  path: '/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedIndexRoute = AuthedIndexRouteImport.update({
@@ -49,14 +49,14 @@ const AuthedIndexRoute = AuthedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
-const UnauthedRegisterRoute = UnauthedRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => UnauthedRouteRoute,
-} as any)
 const UnauthedLoginRoute = UnauthedLoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => UnauthedRouteRoute,
+} as any)
+const UnauthedRegisterRoute = UnauthedRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => UnauthedRouteRoute,
 } as any)
 const AuthedEntriesIndexRoute = AuthedEntriesIndexRouteImport.update({
@@ -64,20 +64,20 @@ const AuthedEntriesIndexRoute = AuthedEntriesIndexRouteImport.update({
   path: '/entries/',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
+const AuthedEntriesNewRoute = AuthedEntriesNewRouteImport.update({
+  id: '/entries/new',
+  path: '/entries/new',
+  getParentRoute: () => AuthedRouteRoute,
 } as any)
 const AuthedEntriesSearchRoute = AuthedEntriesSearchRouteImport.update({
   id: '/entries/search',
   path: '/entries/search',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
-const AuthedEntriesNewRoute = AuthedEntriesNewRouteImport.update({
-  id: '/entries/new',
-  path: '/entries/new',
-  getParentRoute: () => AuthedRouteRoute,
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedEntriesByContextTypeRoute =
   AuthedEntriesByContextTypeRouteImport.update({
@@ -222,18 +222,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/logout': {
-      id: '/logout'
-      path: '/logout'
-      fullPath: '/logout'
-      preLoaderRoute: typeof LogoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/health': {
-      id: '/health'
-      path: '/health'
-      fullPath: '/health'
-      preLoaderRoute: typeof HealthRouteImport
+    '/_authed': {
+      id: '/_authed'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_unauthed': {
@@ -243,11 +236,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnauthedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authed': {
-      id: '/_authed'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthedRouteRouteImport
+    '/health': {
+      id: '/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof HealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logout': {
+      id: '/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed/': {
@@ -257,18 +257,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedIndexRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
-    '/_unauthed/register': {
-      id: '/_unauthed/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof UnauthedRegisterRouteImport
-      parentRoute: typeof UnauthedRouteRoute
-    }
     '/_unauthed/login': {
       id: '/_unauthed/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof UnauthedLoginRouteImport
+      parentRoute: typeof UnauthedRouteRoute
+    }
+    '/_unauthed/register': {
+      id: '/_unauthed/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof UnauthedRegisterRouteImport
       parentRoute: typeof UnauthedRouteRoute
     }
     '/_authed/entries/': {
@@ -278,12 +278,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesIndexRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authed/entries/new': {
+      id: '/_authed/entries/new'
+      path: '/entries/new'
+      fullPath: '/entries/new'
+      preLoaderRoute: typeof AuthedEntriesNewRouteImport
+      parentRoute: typeof AuthedRouteRoute
     }
     '/_authed/entries/search': {
       id: '/_authed/entries/search'
@@ -292,12 +292,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesSearchRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
-    '/_authed/entries/new': {
-      id: '/_authed/entries/new'
-      path: '/entries/new'
-      fullPath: '/entries/new'
-      preLoaderRoute: typeof AuthedEntriesNewRouteImport
-      parentRoute: typeof AuthedRouteRoute
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authed/entries/by/$contextType': {
       id: '/_authed/entries/by/$contextType'
