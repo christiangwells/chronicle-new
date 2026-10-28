@@ -13,10 +13,9 @@ import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as HealthRouteImport } from './routes/health'
 import { Route as UnauthedRouteRouteImport } from './routes/_unauthed/route'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
 import { Route as UnauthedRegisterRouteImport } from './routes/_unauthed/register'
 import { Route as UnauthedLoginRouteImport } from './routes/_unauthed/login'
-import { Route as AuthedEntriesRouteRouteImport } from './routes/_authed/entries/route'
 import { Route as AuthedEntriesIndexRouteImport } from './routes/_authed/entries/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedEntriesSearchRouteImport } from './routes/_authed/entries/search'
@@ -45,10 +44,10 @@ const AuthedRouteRoute = AuthedRouteRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthedIndexRoute = AuthedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthedRouteRoute,
 } as any)
 const UnauthedRegisterRoute = UnauthedRegisterRouteImport.update({
   id: '/register',
@@ -60,15 +59,10 @@ const UnauthedLoginRoute = UnauthedLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => UnauthedRouteRoute,
 } as any)
-const AuthedEntriesRouteRoute = AuthedEntriesRouteRouteImport.update({
-  id: '/entries',
-  path: '/entries',
-  getParentRoute: () => AuthedRouteRoute,
-} as any)
 const AuthedEntriesIndexRoute = AuthedEntriesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthedEntriesRouteRoute,
+  id: '/entries/',
+  path: '/entries/',
+  getParentRoute: () => AuthedRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -76,20 +70,20 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedEntriesSearchRoute = AuthedEntriesSearchRouteImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => AuthedEntriesRouteRoute,
+  id: '/entries/search',
+  path: '/entries/search',
+  getParentRoute: () => AuthedRouteRoute,
 } as any)
 const AuthedEntriesNewRoute = AuthedEntriesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AuthedEntriesRouteRoute,
+  id: '/entries/new',
+  path: '/entries/new',
+  getParentRoute: () => AuthedRouteRoute,
 } as any)
 const AuthedEntriesByContextTypeRoute =
   AuthedEntriesByContextTypeRouteImport.update({
-    id: '/by/$contextType',
-    path: '/by/$contextType',
-    getParentRoute: () => AuthedEntriesRouteRoute,
+    id: '/entries/by/$contextType',
+    path: '/entries/by/$contextType',
+    getParentRoute: () => AuthedRouteRoute,
   } as any)
 const AuthedEntriesByContextTypeIndexRoute =
   AuthedEntriesByContextTypeIndexRouteImport.update({
@@ -117,10 +111,9 @@ const AuthedEntriesByContextTypeContextIdEntryIdEditRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthedIndexRoute
   '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
-  '/entries': typeof AuthedEntriesRouteRouteWithChildren
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
   '/entries/new': typeof AuthedEntriesNewRoute
@@ -134,7 +127,7 @@ export interface FileRoutesByFullPath {
   '/entries/by/$contextType/$contextId/$entryId/': typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof AuthedIndexRoute
   '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
   '/login': typeof UnauthedLoginRoute
@@ -150,14 +143,13 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteRouteWithChildren
   '/_unauthed': typeof UnauthedRouteRouteWithChildren
   '/health': typeof HealthRoute
   '/logout': typeof LogoutRoute
-  '/_authed/entries': typeof AuthedEntriesRouteRouteWithChildren
   '/_unauthed/login': typeof UnauthedLoginRoute
   '/_unauthed/register': typeof UnauthedRegisterRoute
+  '/_authed/': typeof AuthedIndexRoute
   '/_authed/entries/new': typeof AuthedEntriesNewRoute
   '/_authed/entries/search': typeof AuthedEntriesSearchRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -174,7 +166,6 @@ export interface FileRouteTypes {
     | '/'
     | '/health'
     | '/logout'
-    | '/entries'
     | '/login'
     | '/register'
     | '/entries/new'
@@ -203,14 +194,13 @@ export interface FileRouteTypes {
     | '/entries/by/$contextType/$contextId/$entryId'
   id:
     | '__root__'
-    | '/'
     | '/_authed'
     | '/_unauthed'
     | '/health'
     | '/logout'
-    | '/_authed/entries'
     | '/_unauthed/login'
     | '/_unauthed/register'
+    | '/_authed/'
     | '/_authed/entries/new'
     | '/_authed/entries/search'
     | '/api/auth/$'
@@ -223,7 +213,6 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthedRouteRoute: typeof AuthedRouteRouteWithChildren
   UnauthedRouteRoute: typeof UnauthedRouteRouteWithChildren
   HealthRoute: typeof HealthRoute
@@ -261,12 +250,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_authed/': {
+      id: '/_authed/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthedIndexRouteImport
+      parentRoute: typeof AuthedRouteRoute
     }
     '/_unauthed/register': {
       id: '/_unauthed/register'
@@ -282,19 +271,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnauthedLoginRouteImport
       parentRoute: typeof UnauthedRouteRoute
     }
-    '/_authed/entries': {
-      id: '/_authed/entries'
-      path: '/entries'
-      fullPath: '/entries'
-      preLoaderRoute: typeof AuthedEntriesRouteRouteImport
-      parentRoute: typeof AuthedRouteRoute
-    }
     '/_authed/entries/': {
       id: '/_authed/entries/'
-      path: '/'
+      path: '/entries'
       fullPath: '/entries/'
       preLoaderRoute: typeof AuthedEntriesIndexRouteImport
-      parentRoute: typeof AuthedEntriesRouteRoute
+      parentRoute: typeof AuthedRouteRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -305,24 +287,24 @@ declare module '@tanstack/react-router' {
     }
     '/_authed/entries/search': {
       id: '/_authed/entries/search'
-      path: '/search'
+      path: '/entries/search'
       fullPath: '/entries/search'
       preLoaderRoute: typeof AuthedEntriesSearchRouteImport
-      parentRoute: typeof AuthedEntriesRouteRoute
+      parentRoute: typeof AuthedRouteRoute
     }
     '/_authed/entries/new': {
       id: '/_authed/entries/new'
-      path: '/new'
+      path: '/entries/new'
       fullPath: '/entries/new'
       preLoaderRoute: typeof AuthedEntriesNewRouteImport
-      parentRoute: typeof AuthedEntriesRouteRoute
+      parentRoute: typeof AuthedRouteRoute
     }
     '/_authed/entries/by/$contextType': {
       id: '/_authed/entries/by/$contextType'
-      path: '/by/$contextType'
+      path: '/entries/by/$contextType'
       fullPath: '/entries/by/$contextType'
       preLoaderRoute: typeof AuthedEntriesByContextTypeRouteImport
-      parentRoute: typeof AuthedEntriesRouteRoute
+      parentRoute: typeof AuthedRouteRoute
     }
     '/_authed/entries/by/$contextType/': {
       id: '/_authed/entries/by/$contextType/'
@@ -390,29 +372,20 @@ const AuthedEntriesByContextTypeRouteWithChildren =
     AuthedEntriesByContextTypeRouteChildren,
   )
 
-interface AuthedEntriesRouteRouteChildren {
+interface AuthedRouteRouteChildren {
+  AuthedIndexRoute: typeof AuthedIndexRoute
   AuthedEntriesNewRoute: typeof AuthedEntriesNewRoute
   AuthedEntriesSearchRoute: typeof AuthedEntriesSearchRoute
   AuthedEntriesIndexRoute: typeof AuthedEntriesIndexRoute
   AuthedEntriesByContextTypeRoute: typeof AuthedEntriesByContextTypeRouteWithChildren
 }
 
-const AuthedEntriesRouteRouteChildren: AuthedEntriesRouteRouteChildren = {
+const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
+  AuthedIndexRoute: AuthedIndexRoute,
   AuthedEntriesNewRoute: AuthedEntriesNewRoute,
   AuthedEntriesSearchRoute: AuthedEntriesSearchRoute,
   AuthedEntriesIndexRoute: AuthedEntriesIndexRoute,
   AuthedEntriesByContextTypeRoute: AuthedEntriesByContextTypeRouteWithChildren,
-}
-
-const AuthedEntriesRouteRouteWithChildren =
-  AuthedEntriesRouteRoute._addFileChildren(AuthedEntriesRouteRouteChildren)
-
-interface AuthedRouteRouteChildren {
-  AuthedEntriesRouteRoute: typeof AuthedEntriesRouteRouteWithChildren
-}
-
-const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
-  AuthedEntriesRouteRoute: AuthedEntriesRouteRouteWithChildren,
 }
 
 const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(
@@ -434,7 +407,6 @@ const UnauthedRouteRouteWithChildren = UnauthedRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthedRouteRoute: AuthedRouteRouteWithChildren,
   UnauthedRouteRoute: UnauthedRouteRouteWithChildren,
   HealthRoute: HealthRoute,

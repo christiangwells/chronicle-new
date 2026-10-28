@@ -16,16 +16,6 @@ export function assertEntryContextType(
   )
 }
 
-export interface EntriesStats {
-  total: number
-  days: number
-  currentDayStreak: number
-  currentWeek: number
-  thisDay: number
-  firstDate: Date | null
-  latestDate: Date | null
-}
-
 // To make reading grouped types easier
 export type Year = string
 export type Month = string

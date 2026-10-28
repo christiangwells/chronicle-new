@@ -13,9 +13,9 @@ export const getEntriesCountByDate = createServerFn()
     const rows = await prisma.$queryRaw<
       Array<{ year: string; month: string; day: string; count: number }>
     >`
-      SELECT strftime('%Y', date) AS year,
-             strftime('%m', date) AS month,
-             strftime('%d', date) AS day,
+      SELECT strftime('%Y', date, 'localtime') AS year,
+             strftime('%m', date, 'localtime') AS month,
+             strftime('%d', date, 'localtime') AS day,
              COUNT(*) AS count
       FROM entry e
       WHERE e.authorId = ${userId}

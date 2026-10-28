@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { EntryContextTypeSidebar } from '~/features/entries/components/context-type-sidebar'
 
 export const Route = createFileRoute('/_authed/entries/search')({
+  staticData: { sidebar: true },
   component: RouteComponent,
 })
 

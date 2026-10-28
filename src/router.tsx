@@ -5,6 +5,13 @@ import * as TanstackQuery from './integrations/tanstack-query/root-provider'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
+declare module '@tanstack/react-router' {
+  interface StaticDataRouteOption {
+    /** The route renders a sidebar, so the header shows the sidebar toggle */
+    sidebar?: boolean
+  }
+}
+
 // Create a new router instance
 export const getRouter = () => {
   const rqContext = TanstackQuery.getContext()

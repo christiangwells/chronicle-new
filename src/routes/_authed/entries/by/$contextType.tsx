@@ -7,6 +7,7 @@ import {
 } from '~/features/entries/types'
 
 export const Route = createFileRoute('/_authed/entries/by/$contextType')({
+  staticData: { sidebar: true },
   component: RouteComponent,
   params: {
     parse: (params): { contextType: EntryContextType } => {

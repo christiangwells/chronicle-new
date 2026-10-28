@@ -1,52 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router'
-import dayjs from 'dayjs'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { EntryContextTypeSidebar } from '~/features/entries/components/context-type-sidebar'
-import { getEntryStats } from '~/features/entries/data/get-stats'
+import { EntryContextType } from '~/features/entries/types'
 
 export const Route = createFileRoute('/_authed/entries/')({
-  loader: () => getEntryStats(),
-  component: RouteComponent,
+  loader: () => {
+    throw redirect({
+      to: '/entries/by/$contextType',
+      params: { contextType: EntryContextType.month },
+    })
+  },
 })
-
-function RouteComponent() {
-  const stats = Route.useLoaderData()
-
-  return (
-    <div className="flex w-full">
-      <EntryContextTypeSidebar />
-      <div className="bg-muted/50 top-(--header-height) flex h-[calc(100svh-var(--header-height))]! w-full">
-        <div className="mx-auto mt-12 grid h-32 grid-cols-3 gap-4 px-6 text-center">
-          <Stat label="Total" value={stats.total ?? 0} />
-          <Stat label="Days" value={stats.days ?? 0} />
-          <Stat label="Streak" value={stats.currentDayStreak ?? 0} />
-          <Stat label="This Week" value={stats.currentWeek ?? 0} />
-          <Stat label="This Day" value={stats.thisDay ?? 0} />
-          <div className="flex flex-col items-center justify-center">
-            <div className="text-muted-foreground text-xs">First</div>
-            <div className="text-sm">
-              {stats.firstDate
-                ? dayjs(stats.firstDate).format('MMM D, YYYY')
-                : '—'}
-            </div>
-            <div className="text-muted-foreground mt-2 text-xs">Latest</div>
-            <div className="text-sm">
-              {stats.latestDate
-                ? dayjs(stats.latestDate).format('MMM D, YYYY')
-                : '—'}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function Stat({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="flex flex-row items-center justify-center gap-2 rounded-md p-3">
-      <div className="text-muted-foreground text-xs">{label}</div>
-      <div className="text-2xl font-bold">{value}</div>
-    </div>
-  )
-}

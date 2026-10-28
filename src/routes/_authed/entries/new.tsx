@@ -9,6 +9,7 @@ import { EntryContextType } from '~/features/entries/types'
 import { toDateString } from '~/lib/dates'
 
 export const Route = createFileRoute('/_authed/entries/new')({
+  staticData: { sidebar: true },
   component: RouteComponent,
 })
 
