@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 
 import { Card, CardContent } from '~/components/ui/card'
@@ -19,6 +20,14 @@ function RouteComponent() {
   const entry = Route.useLoaderData()
   const params = Route.useParams()
   const router = useRouter()
+  const queryClient = useQueryClient()
+
+  const invalidate = () =>
+    Promise.all([
+      router.invalidate(),
+      queryClient.invalidateQueries({ queryKey: ['entries'] }),
+      queryClient.invalidateQueries({ queryKey: ['tags'] }),
+    ])
 
   const navigateToEntry = () => {
     router.navigate({
@@ -29,13 +38,13 @@ function RouteComponent() {
 
   const onSubmit = async (input: EntryInput) => {
     await updateEntry({ data: { id: entry.id, input } })
-    await router.invalidate()
+    await invalidate()
     navigateToEntry()
   }
 
   const onDelete = async () => {
     await deleteEntry({ data: { id: entry.id } })
-    await router.invalidate()
+    await invalidate()
     router.navigate({ to: '/entries/by/$contextType/$contextId', params })
   }
 

@@ -40,7 +40,7 @@ export const getEntriesCountByDate = createServerFn()
 export function useGetEntriesByDateSuspenseQuery() {
   const getMonths = useServerFn(getEntriesCountByDate)
   return useSuspenseQuery({
-    queryKey: ['entriesByDate'],
+    queryKey: ['entries', 'countByDate'],
     queryFn: () => getMonths(),
   })
 }

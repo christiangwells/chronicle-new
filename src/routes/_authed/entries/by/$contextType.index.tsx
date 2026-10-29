@@ -35,7 +35,12 @@ export const Route = createFileRoute('/_authed/entries/by/$contextType/')({
   component: RouteComponent,
 })
 
-// TODO: have something generic here, like an image?
 function RouteComponent() {
-  return <div>TODO</div>
+  const { contextType } = Route.useParams()
+
+  return (
+    <div className="bg-muted/80 top-(--header-height) flex h-[calc(100svh-var(--header-height))]! w-full justify-center p-4">
+      <div className="text-muted-foreground">Select a {contextType}</div>
+    </div>
+  )
 }

@@ -38,7 +38,7 @@ export const getEntriesCountByMonth = createServerFn()
 export function useGetEntriesByMonthSuspenseQuery() {
   const getMonths = useServerFn(getEntriesCountByMonth)
   return useSuspenseQuery({
-    queryKey: ['entriesByMonth'],
+    queryKey: ['entries', 'countByMonth'],
     queryFn: () => getMonths(),
   })
 }

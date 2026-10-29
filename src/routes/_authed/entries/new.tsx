@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 
 import { Card, CardContent } from '~/components/ui/card'
@@ -15,10 +16,15 @@ export const Route = createFileRoute('/_authed/entries/new')({
 
 function RouteComponent() {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const onSubmit = async (input: EntryInput) => {
     const entry = await createEntry({ data: { input } })
-    await router.invalidate()
+    await Promise.all([
+      router.invalidate(),
+      queryClient.invalidateQueries({ queryKey: ['entries'] }),
+      queryClient.invalidateQueries({ queryKey: ['tags'] }),
+    ])
     router.navigate({
       to: '/entries/by/$contextType/$contextId/$entryId',
       params: {

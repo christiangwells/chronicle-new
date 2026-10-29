@@ -27,6 +27,7 @@ import { assertUnreachable } from '~/lib/utils'
 
 import { EntryDates } from './date'
 import { EntryMonths } from './month'
+import { EntryTags } from './tag'
 
 const contextTypeButtonData = [
   { contextType: EntryContextType.month, icon: <CalendarDaysIcon /> },
@@ -109,7 +110,7 @@ const Content: React.FC<{
   } else if (contextType === EntryContextType.date) {
     return <EntryDates />
   } else if (contextType === EntryContextType.tag) {
-    return 'tag'
+    return <EntryTags />
   } else if (contextType === 'search') {
     return 'search'
   } else if (contextType === 'new' || contextType === undefined) {

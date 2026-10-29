@@ -32,7 +32,7 @@ export const EntrySummaryCard: React.FC<{ entry: EntryWithTags }> = ({
             className="text-muted-foreground line-clamp-2 first:line-clamp-3 last:line-clamp-3 only:line-clamp-4"
             dangerouslySetInnerHTML={{ __html: entry.text }}
           />
-          {entry.tags.length > 1 && (
+          {entry.tags.length > 0 && (
             <div className="space-x-2">
               {entry.tags
                 .sort((a, b) => a.text.localeCompare(b.text))
