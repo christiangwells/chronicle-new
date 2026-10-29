@@ -5,8 +5,18 @@ import { Badge } from '~/components/ui/badge'
 import { Card, CardContent } from '~/components/ui/card'
 import type { EntryWithTags } from '~/features/entries/types'
 
-export const EntrySummaryCard: React.FC<{ entry: EntryWithTags }> = ({
+interface EntrySummaryCardProps {
+  entry: Pick<EntryWithTags, 'date' | 'title' | 'tags'> & { text?: string }
+  /** Overrides the entry's title */
+  title?: React.ReactNode
+  /** Overrides the entry's (HTML) text */
+  body?: React.ReactNode
+}
+
+export const EntrySummaryCard: React.FC<EntrySummaryCardProps> = ({
   entry,
+  title = entry.title,
+  body,
 }) => {
   const date = dayjs(entry.date)
 
@@ -25,13 +35,17 @@ export const EntrySummaryCard: React.FC<{ entry: EntryWithTags }> = ({
           <p>{date.format('YYYY')}</p>
         </div>
         <div className="flex-1 space-y-0">
-          {entry.title && (
-            <p className="line-clamp-1 font-semibold">{entry.title}</p>
+          {title && <p className="line-clamp-1 font-semibold">{title}</p>}
+          {body !== undefined ? (
+            <div className="text-muted-foreground line-clamp-2 first:line-clamp-3 last:line-clamp-3 only:line-clamp-4">
+              {body}
+            </div>
+          ) : (
+            <div
+              className="text-muted-foreground line-clamp-2 first:line-clamp-3 last:line-clamp-3 only:line-clamp-4"
+              dangerouslySetInnerHTML={{ __html: entry.text ?? '' }}
+            />
           )}
-          <div
-            className="text-muted-foreground line-clamp-2 first:line-clamp-3 last:line-clamp-3 only:line-clamp-4"
-            dangerouslySetInnerHTML={{ __html: entry.text }}
-          />
           {entry.tags.length > 0 && (
             <div className="space-x-2">
               {entry.tags

@@ -1,6 +1,7 @@
 import type { Entry, Tag } from '~/generated/prisma/client'
 
-export type EntryWithTags = Entry & { tags: Tag[] }
+// `plainText` is omitted globally (see `~/db`)
+export type EntryWithTags = Omit<Entry, 'plainText'> & { tags: Tag[] }
 
 export enum EntryContextType {
   month = 'month',

@@ -41,6 +41,7 @@ export type EntryMinAggregateOutputType = {
   date: Date | null
   title: string | null
   text: string | null
+  plainText: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +53,7 @@ export type EntryMaxAggregateOutputType = {
   date: Date | null
   title: string | null
   text: string | null
+  plainText: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,6 +65,7 @@ export type EntryCountAggregateOutputType = {
   date: number
   title: number
   text: number
+  plainText: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -84,6 +87,7 @@ export type EntryMinAggregateInputType = {
   date?: true
   title?: true
   text?: true
+  plainText?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,6 +99,7 @@ export type EntryMaxAggregateInputType = {
   date?: true
   title?: true
   text?: true
+  plainText?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +111,7 @@ export type EntryCountAggregateInputType = {
   date?: true
   title?: true
   text?: true
+  plainText?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,6 +210,7 @@ export type EntryGroupByOutputType = {
   date: Date
   title: string | null
   text: string
+  plainText: string
   createdAt: Date
   updatedAt: Date
   _count: EntryCountAggregateOutputType | null
@@ -238,6 +245,7 @@ export type EntryWhereInput = {
   date?: Prisma.DateTimeFilter<"Entry"> | Date | string
   title?: Prisma.StringNullableFilter<"Entry"> | string | null
   text?: Prisma.StringFilter<"Entry"> | string
+  plainText?: Prisma.StringFilter<"Entry"> | string
   createdAt?: Prisma.DateTimeFilter<"Entry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Entry"> | Date | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -251,6 +259,7 @@ export type EntryOrderByWithRelationInput = {
   date?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   text?: Prisma.SortOrder
+  plainText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   author?: Prisma.UserOrderByWithRelationInput
@@ -267,6 +276,7 @@ export type EntryWhereUniqueInput = Prisma.AtLeast<{
   date?: Prisma.DateTimeFilter<"Entry"> | Date | string
   title?: Prisma.StringNullableFilter<"Entry"> | string | null
   text?: Prisma.StringFilter<"Entry"> | string
+  plainText?: Prisma.StringFilter<"Entry"> | string
   createdAt?: Prisma.DateTimeFilter<"Entry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Entry"> | Date | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -280,6 +290,7 @@ export type EntryOrderByWithAggregationInput = {
   date?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   text?: Prisma.SortOrder
+  plainText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.EntryCountOrderByAggregateInput
@@ -299,6 +310,7 @@ export type EntryScalarWhereWithAggregatesInput = {
   date?: Prisma.DateTimeWithAggregatesFilter<"Entry"> | Date | string
   title?: Prisma.StringNullableWithAggregatesFilter<"Entry"> | string | null
   text?: Prisma.StringWithAggregatesFilter<"Entry"> | string
+  plainText?: Prisma.StringWithAggregatesFilter<"Entry"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Entry"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Entry"> | Date | string
 }
@@ -308,6 +320,7 @@ export type EntryCreateInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutEntriesInput
@@ -321,6 +334,7 @@ export type EntryUncheckedCreateInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutEntriesInput
@@ -331,6 +345,7 @@ export type EntryUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutEntriesNestedInput
@@ -344,6 +359,7 @@ export type EntryUncheckedUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagUncheckedUpdateManyWithoutEntriesNestedInput
@@ -356,6 +372,7 @@ export type EntryCreateManyInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -365,6 +382,7 @@ export type EntryUpdateManyMutationInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,6 +394,7 @@ export type EntryUncheckedUpdateManyInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -397,6 +416,7 @@ export type EntryCountOrderByAggregateInput = {
   date?: Prisma.SortOrder
   title?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  plainText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -412,6 +432,7 @@ export type EntryMaxOrderByAggregateInput = {
   date?: Prisma.SortOrder
   title?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  plainText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -423,6 +444,7 @@ export type EntryMinOrderByAggregateInput = {
   date?: Prisma.SortOrder
   title?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  plainText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -524,6 +546,7 @@ export type EntryCreateWithoutAuthorInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   tags?: Prisma.TagCreateNestedManyWithoutEntriesInput
@@ -535,6 +558,7 @@ export type EntryUncheckedCreateWithoutAuthorInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutEntriesInput
@@ -575,6 +599,7 @@ export type EntryScalarWhereInput = {
   date?: Prisma.DateTimeFilter<"Entry"> | Date | string
   title?: Prisma.StringNullableFilter<"Entry"> | string | null
   text?: Prisma.StringFilter<"Entry"> | string
+  plainText?: Prisma.StringFilter<"Entry"> | string
   createdAt?: Prisma.DateTimeFilter<"Entry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Entry"> | Date | string
 }
@@ -584,6 +609,7 @@ export type EntryCreateWithoutTagsInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutEntriesInput
@@ -596,6 +622,7 @@ export type EntryUncheckedCreateWithoutTagsInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -627,6 +654,7 @@ export type EntryCreateManyAuthorInput = {
   date: Date | string
   title?: string | null
   text: string
+  plainText?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -636,6 +664,7 @@ export type EntryUpdateWithoutAuthorInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagUpdateManyWithoutEntriesNestedInput
@@ -647,6 +676,7 @@ export type EntryUncheckedUpdateWithoutAuthorInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagUncheckedUpdateManyWithoutEntriesNestedInput
@@ -658,6 +688,7 @@ export type EntryUncheckedUpdateManyWithoutAuthorInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -667,6 +698,7 @@ export type EntryUpdateWithoutTagsInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutEntriesNestedInput
@@ -679,6 +711,7 @@ export type EntryUncheckedUpdateWithoutTagsInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -690,6 +723,7 @@ export type EntryUncheckedUpdateManyWithoutTagsInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   text?: Prisma.StringFieldUpdateOperationsInput | string
+  plainText?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -732,6 +766,7 @@ export type EntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   date?: boolean
   title?: boolean
   text?: boolean
+  plainText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -746,6 +781,7 @@ export type EntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   date?: boolean
   title?: boolean
   text?: boolean
+  plainText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -758,6 +794,7 @@ export type EntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   date?: boolean
   title?: boolean
   text?: boolean
+  plainText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -770,11 +807,12 @@ export type EntrySelectScalar = {
   date?: boolean
   title?: boolean
   text?: boolean
+  plainText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "uuid" | "authorId" | "date" | "title" | "text" | "createdAt" | "updatedAt", ExtArgs["result"]["entry"]>
+export type EntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "uuid" | "authorId" | "date" | "title" | "text" | "plainText" | "createdAt" | "updatedAt", ExtArgs["result"]["entry"]>
 export type EntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tags?: boolean | Prisma.Entry$tagsArgs<ExtArgs>
@@ -800,6 +838,7 @@ export type $EntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     date: Date
     title: string | null
     text: string
+    plainText: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["entry"]>
@@ -1233,6 +1272,7 @@ export interface EntryFieldRefs {
   readonly date: Prisma.FieldRef<"Entry", 'DateTime'>
   readonly title: Prisma.FieldRef<"Entry", 'String'>
   readonly text: Prisma.FieldRef<"Entry", 'String'>
+  readonly plainText: Prisma.FieldRef<"Entry", 'String'>
   readonly createdAt: Prisma.FieldRef<"Entry", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Entry", 'DateTime'>
 }

@@ -1,5 +1,5 @@
 import { Link, useMatches } from '@tanstack/react-router'
-import { SidebarIcon } from 'lucide-react'
+import { PlusIcon, SearchIcon, SidebarIcon } from 'lucide-react'
 import type React from 'react'
 
 import { Quill } from '~/components/quill'
@@ -49,6 +49,22 @@ export const AppHeader: React.FC = () => {
           </nav>
         </div>
         <Separator orientation="vertical" className="mr-2 h-4" />
+        <Button size="icon-sm" variant="secondary" asChild>
+          <Link
+            to="/entries/new"
+            className="data-[status=active]:text-primary-foreground data-[status=active]:bg-primary"
+          >
+            <PlusIcon />
+          </Link>
+        </Button>
+        <Button variant="secondary" size="icon-sm" asChild>
+          <Link
+            to="/entries/search"
+            className="data-[status=active]:text-primary-foreground data-[status=active]:bg-primary"
+          >
+            <SearchIcon />
+          </Link>
+        </Button>
         <ModeToggle />
         <SettingsMenu />
       </div>

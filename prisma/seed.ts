@@ -4,6 +4,7 @@ import dayjs, { type Dayjs } from 'dayjs'
 import { prisma } from '~/db'
 import { type Tag } from '~/generated/prisma/client'
 import { auth } from '~/lib/auth'
+import { htmlToPlainText } from '~/lib/html'
 
 async function main() {
   console.log('🌱 Seeding database...')
@@ -83,6 +84,7 @@ async function createEntries(userId: string, allTags: Tag[]) {
         date,
         title,
         text,
+        plainText: htmlToPlainText(text),
         authorId: userId,
         tags: { connect: tags },
       },

@@ -909,6 +909,7 @@ export const EntryScalarFieldEnum = {
   date: 'date',
   title: 'title',
   text: 'text',
+  plainText: 'plainText',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

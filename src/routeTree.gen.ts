@@ -23,6 +23,8 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedEntriesByContextTypeRouteImport } from './routes/_authed/entries/by/$contextType'
 import { Route as AuthedEntriesByContextTypeIndexRouteImport } from './routes/_authed/entries/by/$contextType.index'
 import { Route as AuthedEntriesByContextTypeContextIdRouteImport } from './routes/_authed/entries/by/$contextType.$contextId'
+import { Route as AuthedEntriesSearchEntryIdIndexRouteImport } from './routes/_authed/entries/search.$entryId.index'
+import { Route as AuthedEntriesSearchEntryIdEditRouteImport } from './routes/_authed/entries/search.$entryId.edit'
 import { Route as AuthedEntriesByContextTypeContextIdEntryIdIndexRouteImport } from './routes/_authed/entries/by/$contextType.$contextId.$entryId.index'
 import { Route as AuthedEntriesByContextTypeContextIdEntryIdEditRouteImport } from './routes/_authed/entries/by/$contextType.$contextId.$entryId.edit'
 
@@ -97,6 +99,18 @@ const AuthedEntriesByContextTypeContextIdRoute =
     path: '/$contextId',
     getParentRoute: () => AuthedEntriesByContextTypeRoute,
   } as any)
+const AuthedEntriesSearchEntryIdIndexRoute =
+  AuthedEntriesSearchEntryIdIndexRouteImport.update({
+    id: '/$entryId/',
+    path: '/$entryId/',
+    getParentRoute: () => AuthedEntriesSearchRoute,
+  } as any)
+const AuthedEntriesSearchEntryIdEditRoute =
+  AuthedEntriesSearchEntryIdEditRouteImport.update({
+    id: '/$entryId/edit',
+    path: '/$entryId/edit',
+    getParentRoute: () => AuthedEntriesSearchRoute,
+  } as any)
 const AuthedEntriesByContextTypeContextIdEntryIdIndexRoute =
   AuthedEntriesByContextTypeContextIdEntryIdIndexRouteImport.update({
     id: '/$entryId/',
@@ -117,12 +131,14 @@ export interface FileRoutesByFullPath {
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
   '/entries/new': typeof AuthedEntriesNewRoute
-  '/entries/search': typeof AuthedEntriesSearchRoute
+  '/entries/search': typeof AuthedEntriesSearchRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/entries/': typeof AuthedEntriesIndexRoute
   '/entries/by/$contextType': typeof AuthedEntriesByContextTypeRouteWithChildren
   '/entries/by/$contextType/$contextId': typeof AuthedEntriesByContextTypeContextIdRouteWithChildren
+  '/entries/search/$entryId/edit': typeof AuthedEntriesSearchEntryIdEditRoute
   '/entries/by/$contextType/': typeof AuthedEntriesByContextTypeIndexRoute
+  '/entries/search/$entryId/': typeof AuthedEntriesSearchEntryIdIndexRoute
   '/entries/by/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
   '/entries/by/$contextType/$contextId/$entryId/': typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
@@ -133,11 +149,13 @@ export interface FileRoutesByTo {
   '/login': typeof UnauthedLoginRoute
   '/register': typeof UnauthedRegisterRoute
   '/entries/new': typeof AuthedEntriesNewRoute
-  '/entries/search': typeof AuthedEntriesSearchRoute
+  '/entries/search': typeof AuthedEntriesSearchRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/entries': typeof AuthedEntriesIndexRoute
   '/entries/by/$contextType/$contextId': typeof AuthedEntriesByContextTypeContextIdRouteWithChildren
+  '/entries/search/$entryId/edit': typeof AuthedEntriesSearchEntryIdEditRoute
   '/entries/by/$contextType': typeof AuthedEntriesByContextTypeIndexRoute
+  '/entries/search/$entryId': typeof AuthedEntriesSearchEntryIdIndexRoute
   '/entries/by/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
   '/entries/by/$contextType/$contextId/$entryId': typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
@@ -151,12 +169,14 @@ export interface FileRoutesById {
   '/_unauthed/register': typeof UnauthedRegisterRoute
   '/_authed/': typeof AuthedIndexRoute
   '/_authed/entries/new': typeof AuthedEntriesNewRoute
-  '/_authed/entries/search': typeof AuthedEntriesSearchRoute
+  '/_authed/entries/search': typeof AuthedEntriesSearchRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/entries/': typeof AuthedEntriesIndexRoute
   '/_authed/entries/by/$contextType': typeof AuthedEntriesByContextTypeRouteWithChildren
   '/_authed/entries/by/$contextType/$contextId': typeof AuthedEntriesByContextTypeContextIdRouteWithChildren
+  '/_authed/entries/search/$entryId/edit': typeof AuthedEntriesSearchEntryIdEditRoute
   '/_authed/entries/by/$contextType/': typeof AuthedEntriesByContextTypeIndexRoute
+  '/_authed/entries/search/$entryId/': typeof AuthedEntriesSearchEntryIdIndexRoute
   '/_authed/entries/by/$contextType/$contextId/$entryId/edit': typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
   '/_authed/entries/by/$contextType/$contextId/$entryId/': typeof AuthedEntriesByContextTypeContextIdEntryIdIndexRoute
 }
@@ -174,7 +194,9 @@ export interface FileRouteTypes {
     | '/entries/'
     | '/entries/by/$contextType'
     | '/entries/by/$contextType/$contextId'
+    | '/entries/search/$entryId/edit'
     | '/entries/by/$contextType/'
+    | '/entries/search/$entryId/'
     | '/entries/by/$contextType/$contextId/$entryId/edit'
     | '/entries/by/$contextType/$contextId/$entryId/'
   fileRoutesByTo: FileRoutesByTo
@@ -189,7 +211,9 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/entries'
     | '/entries/by/$contextType/$contextId'
+    | '/entries/search/$entryId/edit'
     | '/entries/by/$contextType'
+    | '/entries/search/$entryId'
     | '/entries/by/$contextType/$contextId/$entryId/edit'
     | '/entries/by/$contextType/$contextId/$entryId'
   id:
@@ -207,7 +231,9 @@ export interface FileRouteTypes {
     | '/_authed/entries/'
     | '/_authed/entries/by/$contextType'
     | '/_authed/entries/by/$contextType/$contextId'
+    | '/_authed/entries/search/$entryId/edit'
     | '/_authed/entries/by/$contextType/'
+    | '/_authed/entries/search/$entryId/'
     | '/_authed/entries/by/$contextType/$contextId/$entryId/edit'
     | '/_authed/entries/by/$contextType/$contextId/$entryId/'
   fileRoutesById: FileRoutesById
@@ -320,6 +346,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedEntriesByContextTypeContextIdRouteImport
       parentRoute: typeof AuthedEntriesByContextTypeRoute
     }
+    '/_authed/entries/search/$entryId/': {
+      id: '/_authed/entries/search/$entryId/'
+      path: '/$entryId'
+      fullPath: '/entries/search/$entryId/'
+      preLoaderRoute: typeof AuthedEntriesSearchEntryIdIndexRouteImport
+      parentRoute: typeof AuthedEntriesSearchRoute
+    }
+    '/_authed/entries/search/$entryId/edit': {
+      id: '/_authed/entries/search/$entryId/edit'
+      path: '/$entryId/edit'
+      fullPath: '/entries/search/$entryId/edit'
+      preLoaderRoute: typeof AuthedEntriesSearchEntryIdEditRouteImport
+      parentRoute: typeof AuthedEntriesSearchRoute
+    }
     '/_authed/entries/by/$contextType/$contextId/$entryId/': {
       id: '/_authed/entries/by/$contextType/$contextId/$entryId/'
       path: '/$entryId'
@@ -336,6 +376,19 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthedEntriesSearchRouteChildren {
+  AuthedEntriesSearchEntryIdEditRoute: typeof AuthedEntriesSearchEntryIdEditRoute
+  AuthedEntriesSearchEntryIdIndexRoute: typeof AuthedEntriesSearchEntryIdIndexRoute
+}
+
+const AuthedEntriesSearchRouteChildren: AuthedEntriesSearchRouteChildren = {
+  AuthedEntriesSearchEntryIdEditRoute: AuthedEntriesSearchEntryIdEditRoute,
+  AuthedEntriesSearchEntryIdIndexRoute: AuthedEntriesSearchEntryIdIndexRoute,
+}
+
+const AuthedEntriesSearchRouteWithChildren =
+  AuthedEntriesSearchRoute._addFileChildren(AuthedEntriesSearchRouteChildren)
 
 interface AuthedEntriesByContextTypeContextIdRouteChildren {
   AuthedEntriesByContextTypeContextIdEntryIdEditRoute: typeof AuthedEntriesByContextTypeContextIdEntryIdEditRoute
@@ -375,7 +428,7 @@ const AuthedEntriesByContextTypeRouteWithChildren =
 interface AuthedRouteRouteChildren {
   AuthedIndexRoute: typeof AuthedIndexRoute
   AuthedEntriesNewRoute: typeof AuthedEntriesNewRoute
-  AuthedEntriesSearchRoute: typeof AuthedEntriesSearchRoute
+  AuthedEntriesSearchRoute: typeof AuthedEntriesSearchRouteWithChildren
   AuthedEntriesIndexRoute: typeof AuthedEntriesIndexRoute
   AuthedEntriesByContextTypeRoute: typeof AuthedEntriesByContextTypeRouteWithChildren
 }
@@ -383,7 +436,7 @@ interface AuthedRouteRouteChildren {
 const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
   AuthedIndexRoute: AuthedIndexRoute,
   AuthedEntriesNewRoute: AuthedEntriesNewRoute,
-  AuthedEntriesSearchRoute: AuthedEntriesSearchRoute,
+  AuthedEntriesSearchRoute: AuthedEntriesSearchRouteWithChildren,
   AuthedEntriesIndexRoute: AuthedEntriesIndexRoute,
   AuthedEntriesByContextTypeRoute: AuthedEntriesByContextTypeRouteWithChildren,
 }

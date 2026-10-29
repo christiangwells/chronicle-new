@@ -4,6 +4,7 @@ import { prisma } from '~/db'
 import { updateEntrySchema } from '~/features/entries/lib'
 import type { EntryWithTags } from '~/features/entries/types'
 import { authMiddleware } from '~/lib/auth/middleware'
+import { htmlToPlainText } from '~/lib/html'
 
 export const updateEntry = createServerFn()
   .middleware([authMiddleware])
@@ -41,6 +42,7 @@ export const updateEntry = createServerFn()
         date: new Date(input.date),
         title: input.title?.trim() || null,
         text: input.text,
+        plainText: htmlToPlainText(input.text),
         tags: {
           set: existingTagIds.map((tagId) => ({ id: tagId })),
           connectOrCreate: newTagTexts.map((text) => ({

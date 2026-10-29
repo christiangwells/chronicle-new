@@ -31,11 +31,14 @@ model Entry {
   date      DateTime
   title     String?
   text      String
+  // Plain text version of `text` (which is HTML) for keyword search
+  plainText String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   author    User     @relation(fields: [authorId], references: [id])
   tags      Tag[]    @relation("_entry_to_tag")
 
+  @@index([authorId, date])
   @@map("entry")
 }
 

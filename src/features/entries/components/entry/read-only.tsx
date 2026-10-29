@@ -19,7 +19,7 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
       <div className="flex flex-row items-center">
         {closeRoute ? (
           <Button variant="secondary" size="icon-sm" asChild>
-            <Link to={closeRoute.to} params={closeRoute.params}>
+            <Link {...closeRoute}>
               <XIcon />
             </Link>
           </Button>
@@ -32,7 +32,7 @@ export const ReadOnlyEntry: React.FC<{ entry: EntryWithTags }> = ({
         </p>
         {editRoute ? (
           <Button variant="default" size="icon-sm" asChild>
-            <Link to={editRoute.to} params={editRoute.params}>
+            <Link {...editRoute}>
               <PencilIcon />
             </Link>
           </Button>
@@ -66,6 +66,10 @@ function useCloseRoute() {
     to: '/entries/by/$contextType/$contextId',
     fuzzy: true,
   })
+  const searchMatch = matchRoute({
+    to: '/entries/search/$entryId',
+    fuzzy: true,
+  })
   // TODO: standalone match when that's a route?
 
   if (contextMatch) {
@@ -73,6 +77,11 @@ function useCloseRoute() {
       to: '/entries/by/$contextType/$contextId',
       params: contextMatch,
     } as const
+  }
+
+  if (searchMatch) {
+    // Keep the search filters
+    return { to: '/entries/search', search: true } as const
   }
 
   return null
@@ -84,12 +93,24 @@ function useEditRoute() {
     to: '/entries/by/$contextType/$contextId/$entryId',
     fuzzy: true,
   })
+  const searchMatch = matchRoute({
+    to: '/entries/search/$entryId',
+    fuzzy: true,
+  })
   // TODO: standalone match when that's a route?
 
   if (contextMatch) {
     return {
       to: '/entries/by/$contextType/$contextId/$entryId/edit',
       params: contextMatch,
+    } as const
+  }
+
+  if (searchMatch) {
+    return {
+      to: '/entries/search/$entryId/edit',
+      params: searchMatch,
+      search: true,
     } as const
   }
 
