@@ -1,4 +1,4 @@
-import { useMatchRoute, useNavigate } from '@tanstack/react-router'
+import { useNavigate, useParams } from '@tanstack/react-router'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import dayjs from 'dayjs'
 import type React from 'react'
@@ -16,17 +16,15 @@ import {
 export const EntryDates: React.FC = () => {
   const { data } = useGetEntriesByDateSuspenseQuery()
   const navigate = useNavigate()
-  const matchRoute = useMatchRoute()
+  // Read params from the matches being rendered; useMatchRoute matches against
+  // the previous location while a navigation into this view is still pending
+  const { contextType, contextId } = useParams({ strict: false })
   const scrollElementRef = useRef<HTMLDivElement>(null)
-  const hasScrolledToInitialMonth = useRef(false)
-  const selectedMatch = matchRoute({
-    to: '/entries/by/$contextType/$contextId',
-    fuzzy: true,
-  })
   const selected =
-    selectedMatch && selectedMatch.contextType === EntryContextType.date
-      ? dayjs(selectedMatch.contextId).toDate()
+    contextType === EntryContextType.date && contextId
+      ? dayjs(contextId).toDate()
       : undefined
+  const selectedMonth = selected ? dayjs(selected).format('YYYY-MM') : undefined
 
   const { months, entryDatesByMonth } = useMemo(
     () => createCalendarMonths(data),
@@ -39,18 +37,29 @@ export const EntryDates: React.FC = () => {
     overscan: 2,
   })
 
+  // No "already scrolled" guard: StrictMode remounts cancel the virtualizer's
+  // scroll reconciliation, so the effect must be able to re-run. Leave the
+  // scroll position alone when the selected month is already fully visible
   useEffect(() => {
-    if (months.length === 0 || hasScrolledToInitialMonth.current) return
+    if (months.length === 0) return
 
-    const selectedMonthIndex = selected
-      ? months.indexOf(dayjs(selected).format('YYYY-MM'))
+    const selectedMonthIndex = selectedMonth
+      ? months.indexOf(selectedMonth)
       : -1
     const targetMonthIndex =
       selectedMonthIndex === -1 ? months.length - 1 : selectedMonthIndex
 
-    virtualizer.scrollToIndex(targetMonthIndex, { align: 'end' })
-    hasScrolledToInitialMonth.current = true
-  }, [months, selected, virtualizer])
+    const targetMonth = virtualizer.measurementsCache[targetMonthIndex]
+    const scrollOffset = virtualizer.scrollOffset ?? 0
+    const viewportHeight = virtualizer.scrollRect?.height ?? 0
+    const isFullyVisible =
+      targetMonth &&
+      targetMonth.start >= scrollOffset &&
+      targetMonth.end <= scrollOffset + viewportHeight
+    if (isFullyVisible) return
+
+    virtualizer.scrollToIndex(targetMonthIndex, { align: 'start' })
+  }, [months, selectedMonth, virtualizer])
 
   if (months.length === 0) {
     return (

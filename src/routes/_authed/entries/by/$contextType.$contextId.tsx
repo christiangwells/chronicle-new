@@ -60,10 +60,10 @@ function RouteComponent() {
 
   return (
     <ResizablePanelGroup
-      direction="horizontal"
+      orientation="horizontal"
       className="bg-muted/80 top-(--header-height) h-[calc(100svh-var(--header-height))]!"
     >
-      <ResizablePanel defaultSize={40} minSize={20} className="h-full">
+      <ResizablePanel defaultSize="40" minSize="20" className="h-full">
         <ScrollArea className="h-full">
           <div className="mx-auto flex h-full w-full max-w-5xl flex-col gap-4 p-4">
             <div className="relative my-2 flex items-center justify-center overflow-hidden">
@@ -97,7 +97,7 @@ function RouteComponent() {
       {isEntrySelected && (
         <>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={60} minSize={20}>
+          <ResizablePanel defaultSize="60" minSize="20">
             <Outlet />
           </ResizablePanel>
         </>
